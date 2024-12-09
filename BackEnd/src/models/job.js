@@ -11,7 +11,28 @@ class Job {
       job_category,
       budget,
       status = "pending", // Default to "pending"
+      availability_type,
+      start_date,
+      end_date,
+      age_matters,
+      age_min,
+      age_max,
+      gender_matters,
+      required_gender,
+      additional_details,
+      created_at = new Date(), // Set default creation date
+      updated_at = new Date(), // Set default updated date
     } = jobData;
+
+    // Ensure that start_date and end_date are valid if availability_type is 'closed'
+    if (availability_type === 'closed' && (!start_date || !end_date)) {
+      throw new Error('Start date and end date are required for closed availability type');
+    }
+
+    // Ensure that start_date and end_date are null if availability_type is 'open'
+    if (availability_type === 'open' && (start_date || end_date)) {
+      throw new Error('Start date and end date should be null for open availability type');
+    }
 
     const { data, error } = await supabase
       .from('jobs')
@@ -23,8 +44,17 @@ class Job {
         job_category,
         budget,
         status, // Default status if not provided
-        created_at: new Date(), // Set creation date
-        updated_at: new Date(), // Set updated date
+        availability_type,
+        start_date,
+        end_date,
+        age_matters,
+        age_min,
+        age_max,
+        gender_matters,
+        required_gender,
+        additional_details,
+        created_at,
+        updated_at,
       }])
       .select();
 
