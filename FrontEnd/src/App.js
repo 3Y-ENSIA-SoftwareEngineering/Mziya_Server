@@ -8,6 +8,13 @@ function App() {
   return (
     <Router>
       <div className="App">
+      <Header />
+    <MainContent />
+    <Service />
+    <WhyChooseUs />
+    <HowItWorks />
+    <ContactUs />
+    <Footer />
         {/* Define routes for different screens */}
         <Routes>
           <Route path="/" element={<FindJob />} />

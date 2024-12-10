@@ -1,0 +1,114 @@
+/* Main Content Layout */
+.main-content {
+  display: flex;
+  justify-content: space-between; /* Space images and text */
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  background-color: rgba(20, 34, 87, 1); /* Matches dark blue background */
+  color: white;
+  flex-wrap: wrap; /* Allows wrapping for smaller screens */
+  overflow: hidden; /* Prevents large elements from breaking layout */
+}
+
+.text-content {
+  max-width: 500px; /* Constrain text width */
+  text-align: center;
+  margin: 0 auto; /* Center text content */
+}
+
+.image-container {
+  flex: 1; /* Let both image containers share equal space */
+  display: flex;
+  justify-content: center; /* Center the image within the container */
+}
+
+.image-container img {
+  max-width: 100%; /* Ensure the image scales within its container */
+  max-height: 100%; /* Increased height for images */
+  object-fit: contain; /* Keep image aspect ratio */
+  border-radius: 10px; /* Optional rounded corners */
+}
+
+/* Features Section */
+.features {
+ /* display: flex;
+  justify-content: space-around; /* Spread out items evenly */
+  /*align-items: center;
+  gap: 1rem;
+  margin-top: 1rem; /* Adds space between button and features */
+ /* flex-wrap: wrap; /* Allows wrapping for smaller screens */
+ display: flex;
+ justify-content: center; /* Center the items */
+ align-items: stretch; /* Changed from center to stretch */
+ gap: 1rem; /* Space between items */
+ flex-wrap: wrap; /* Allow wrapping on smaller screens */
+ margin-top: 8vh;
+}
+
+.feature-item {
+  text-align: center; /* Centers the icons and text */
+  width: 100px; /* Limits the size of each feature */
+}
+
+.feature-item img {
+  width: 50px; /* Reduced icon size */
+  height: 50px; /* Ensure uniform height */
+  object-fit: contain; /* Keep aspect ratio if needed */
+  margin-bottom: 0.5rem;
+}
+
+.feature-item p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-align: center; /* Center-align text */
+  word-wrap: break-word; /* Handle long text */
+  margin: 0; /* Reset margin for uniform spacing */
+  opacity: 0.8; /* Slightly faded text */
+}
+.cta-button {
+  background-color: rgba(21, 178, 245, 1); /* Teal color background */
+  color: white; /* White text color */
+  padding: 12px 24px; /* Vertical and horizontal padding */
+  border: none; /* Remove border */
+  border-radius: 30px; /* Rounded corners */
+  font-size: 1.1rem; /* Text size */
+  font-weight: bold; /* Make the text bold */
+  cursor: pointer; /* Change cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  margin-top: 1.5rem; /* Adds space above the button */
+}
+
+.cta-button:hover {
+  background-color: #008c9e; /* Darker teal when hovered */
+  transform: scale(1.05); /* Slight scale up effect on hover */
+}
+
+.cta-button:focus {
+  outline: none; /* Remove focus outline */
+}
+
+.cta-button:active {
+  background-color: #006f7f; /* Darkest teal when button is pressed */
+}
+
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column; /* Stack images and text vertically */
+  }
+
+  .image-container {
+    max-width: 80%; /* Reduce image size for smaller screens */
+    margin: 0 auto; /* Center images */
+  }
+
+  .image-container img {
+    max-height: 250px; /* Slightly smaller height on smaller screens */
+  }
+
+  .feature-item img {
+    width: 40px; /* Further reduce icon size on small screens */
+  }
+}
