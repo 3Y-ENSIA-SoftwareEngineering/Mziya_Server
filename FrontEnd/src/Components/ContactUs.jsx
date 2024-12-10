@@ -1,6 +1,6 @@
+import React, { useState } from "react";
+import "./../CSSFiles/ContactUs.css";
 
-import React, { useState } from 'react';
-import './ContactUs.css';
 function Modal({ message, type, onClose }) {
   return (
     <div className="modal-overlay">
@@ -14,15 +14,19 @@ function Modal({ message, type, onClose }) {
   );
 }
 
-function ContactUs() {
+export function ContactUs() {
   const [formData, setFormData] = useState({
-    name: '',
-    surname: '',
-    email: '',
-    message: '',
+    name: "",
+    surname: "",
+    email: "",
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [modalInfo, setModalInfo] = useState({ show: false, message: '', type: '' });
+  const [modalInfo, setModalInfo] = useState({
+    show: false,
+    message: "",
+    type: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,10 +38,10 @@ function ContactUs() {
 
   const resetForm = () => {
     setFormData({
-      name: '',
-      surname: '',
-      email: '',
-      message: '',
+      name: "",
+      surname: "",
+      email: "",
+      message: "",
     });
   };
 
@@ -45,20 +49,28 @@ function ContactUs() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    fetch('http://localhost:5000/send-message', {
-      method: 'POST',
+    fetch("http://localhost:5000/send-message", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
       .then(() => {
-        setModalInfo({ show: true, message: 'Message sent successfully!', type: 'success' });
+        setModalInfo({
+          show: true,
+          message: "Message sent successfully!",
+          type: "success",
+        });
         resetForm();
       })
       .catch(() => {
-        setModalInfo({ show: true, message: 'Failed to send message. Please try again.', type: 'error' });
+        setModalInfo({
+          show: true,
+          message: "Failed to send message. Please try again.",
+          type: "error",
+        });
       })
       .finally(() => {
         setIsSubmitting(false);
@@ -113,8 +125,12 @@ function ContactUs() {
             onChange={handleChange}
             required
           ></textarea>
-          <button type="submit" className="submit-button" disabled={isSubmitting}>
-            {isSubmitting ? 'Sending...' : 'Submit'}
+          <button
+            type="submit"
+            className="submit-button"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Sending..." : "Submit"}
           </button>
         </form>
       </div>
@@ -122,11 +138,9 @@ function ContactUs() {
         <Modal
           message={modalInfo.message}
           type={modalInfo.type}
-          onClose={() => setModalInfo({ show: false, message: '', type: '' })}
+          onClose={() => setModalInfo({ show: false, message: "", type: "" })}
         />
       )}
     </div>
   );
 }
-
-export default ContactUs;

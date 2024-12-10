@@ -1,6 +1,6 @@
 import React from "react";
-import "./Header.css";
-const Header = () => (
+import "./../CSSFiles/Header.css";
+export const Header = () => (
   <header className="header">
     <div className="logo">Mziya.DARI</div>
     <nav className="nav">
@@ -9,5 +9,3 @@ const Header = () => (
     </nav>
   </header>
 );
-
-export default Header;

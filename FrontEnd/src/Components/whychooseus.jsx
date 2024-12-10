@@ -1,5 +1,5 @@
 import React from "react";
-import "./whychooseus.css";
+import "./../CSSFiles/whychooseus.css";
 import empoweringIcon from "./images/empowering-icon.png";
 import safetyIcon from "./images/safety-icon.png";
 import appointmentsIcon from "./images/appointments-icon.png";
@@ -45,27 +45,24 @@ const items = [
       "We believe in honesty and transparency. MZYA ensures you know exactly what to expect before making a decision.",
   },
 ];
-const WhyChooseUs = () => {
+export const WhyChooseUs = () => {
   return (
     <section className="why-choose-us">
       <div className="container">
-     
-      <h2 className="why-title">Why choose us?</h2>
-      <div className="why-items">
-        {items.map((item, index) => (
-          <div className="why-item" key={index}>
-            <div className="why-item-title-photo">
-            <img src={item.icon} alt={item.title} className="why-icon" />
-            <h3 className="why-item-title">{item.title}</h3>
+        <h2 className="why-title">Why choose us?</h2>
+        <div className="why-items">
+          {items.map((item, index) => (
+            <div className="why-item" key={index}>
+              <div className="why-item-title-photo">
+                <img src={item.icon} alt={item.title} className="why-icon" />
+                <h3 className="why-item-title">{item.title}</h3>
+              </div>
+
+              <p className="why-item-description">{item.description}</p>
             </div>
-            
-            <p className="why-item-description">{item.description}</p>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
       </div>
     </section>
   );
 };
-
-export default WhyChooseUs;

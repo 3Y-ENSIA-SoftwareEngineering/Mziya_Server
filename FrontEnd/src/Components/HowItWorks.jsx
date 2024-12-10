@@ -1,8 +1,8 @@
-import React from 'react';
-import './HowItWorks.css';
-import workerImage from './images/worker-image.png';
+import React from "react";
+import "./../CSSFiles/HowItWorks.css";
+import workerImage from "./images/worker-image.png";
 
-const HowItWorks = () => {
+export const HowItWorks = () => {
   return (
     <section className="how-it-works">
       <h2 className="how-title">How Does Mziya Work?</h2>
@@ -27,8 +27,8 @@ const HowItWorks = () => {
             <li>
               <strong>Select the worker you want</strong>
               <p>
-                After publishing your post, you can sort the workers who want
-                to complete the task and select the most suitable candidate.
+                After publishing your post, you can sort the workers who want to
+                complete the task and select the most suitable candidate.
               </p>
             </li>
             <li>
@@ -44,5 +44,3 @@ const HowItWorks = () => {
     </section>
   );
 };
-
-export default HowItWorks;

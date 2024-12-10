@@ -1,12 +1,13 @@
 import React from "react";
-import "./MainContent.css";
+import "./../CSSFiles/MainContent.css";
 import doorRepair from "./images/door-repair.png";
 import plumbingRepair from "./images/plumbing-repair.png";
 import satisfactionicon from "./images/satisfaction-icon.png";
 import joboffers from "./images/job-offers-icon.png";
 import searchicon from "./images/search-icon.png";
 import calendar from "./images/calendar-icon.png";
-const MainContent = () => (
+
+export const MainContent = () => (
   <main className="main-content">
     <div className="image-container">
       <img src={doorRepair} alt="Door Repair" />
@@ -46,5 +47,3 @@ const MainContent = () => (
     </div>
   </main>
 );
-
-export default MainContent;

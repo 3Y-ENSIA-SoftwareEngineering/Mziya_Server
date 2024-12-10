@@ -83,7 +83,6 @@ const FindJob = () => {
         overflowY: "auto",
       }}
     >
-      <Navbar />
       <div
         style={{
           flex: 1,

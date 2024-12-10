@@ -1,8 +1,8 @@
 import React from "react";
-import "./footer.css";
-import personpointing from './images/person-pointing.png';
+import "./../CSSFiles/footer.css";
+import personpointing from "./images/person-pointing.png";
 
-const HomeService = () => {
+export const Footer = () => {
   return (
     <div className="home-service-container">
       {/* Header Section */}
@@ -35,8 +35,8 @@ const HomeService = () => {
           <div className="footer-left">
             <h3>Mziya.DARI</h3>
             <p>
-              Mziya is your one and only destination for finding a job<br /> in
-              HomeServices, and getting yourself workers too!
+              Mziya is your one and only destination for finding a job
+              <br /> in HomeServices, and getting yourself workers too!
             </p>
             <div className="social-icons">
               <i className="fab fa-youtube"></i>
@@ -71,5 +71,3 @@ const HomeService = () => {
     </div>
   );
 };
-
-export default HomeService;
