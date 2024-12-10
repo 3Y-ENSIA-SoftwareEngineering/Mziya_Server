@@ -1,0 +1,187 @@
+/* Overall container styling */
+.contact-us-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding-top: 10%;
+  background-color: #ffffff;
+  font-family: Arial, sans-serif;
+  gap: 2%; /* Reduce the gap between the form and info */
+  margin-top: 1%;
+}
+
+/* Form section styling */
+.contact-us-form {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px; 
+}
+
+form {
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8%;
+}
+
+.form-input {
+  padding: 12px;
+  border: 1px solid rgba(21, 178, 245, 1);
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  font-size: 16px;
+  outline: none;
+  width: 100%;
+}
+
+.half-input {
+  flex: 1;
+}
+
+.full-input {
+  width: 100%;
+}
+
+.form-textarea {
+  padding: 12px;
+  border: 1px solid rgba(21, 178, 245, 1);
+  border-radius: 25px;
+  font-size: 16px;
+  resize: none;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100px;
+}
+.submit-button {
+  background-color: rgba(20, 34, 87, 1);
+  color: #ffffff;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 18px;
+  width: 100%;
+  transition: all 0.3s ease; /* Changed to affect all properties */
+  margin-bottom: 20%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow */
+  position: relative; /* For click effect */
+  transform: translateY(0); /* For click effect */
+}
+
+.submit-button:hover {
+  background-color: rgba(20, 34, 87, 0.9);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.submit-button:active {
+  transform: translateY(1px);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Add loading state styling */
+.submit-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+/* Info section styling */
+.contact-us-info {
+  flex: 1;
+  max-width: 500px;
+  text-align: left;
+  padding: 10px 20px; /* Reduce padding inside the text section */
+  margin-left: 10%; 
+  margin-bottom: 10%;
+}
+
+.contact-us-info h2 {
+  font-size: 32px;
+  color: rgba(21, 178, 245, 1);
+  margin-bottom: 10px;
+}
+
+.contact-us-info p {
+  font-size: 18px;
+  color: rgba(20, 34, 87, 1);
+  line-height: 1.5;
+  margin-top: 0;
+}
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal Box */
+.modal {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Modal Content */
+.modal p {
+  margin: 0 0 15px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(20, 34, 87, 0.9);
+}
+
+/* Success and Error Styling */
+.modal.success {
+  border: 2px solid rgba(21, 178, 245, 1);
+}
+.modal.error {
+  border: 2px solid rgba(255, 99, 99, 1);
+}
+
+/* Close Button */
+.modal-close-button {
+  background: rgba(21, 178, 245, 1);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.modal-close-button:hover {
+  background: rgba(20, 34, 87, 1);
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
