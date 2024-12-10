@@ -11,6 +11,7 @@ import { HowItWorks } from './Components/HowItWorks.jsx';
 import { ContactUs } from './Components/ContactUs.jsx';
 import { Footer } from './Components/Footer.jsx';
 import { Navbar } from './Components/NavBar.jsx';
+import {PostingPage} from './Components/PostingPage.jsx';
 
 function App() {
   return (
@@ -37,7 +38,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/findjob" element={<FindJob />} />
           <Route path="/signup" element={<SignUp />} />
-          {/* <Route path="/makepost" element={<SignUp />} /> */}
+          <Route path="/makepost" element={<PostingPage />} />
         </Routes>
       </div>
     </Router>
