@@ -1,33 +1,39 @@
 import React, { useState } from "react";
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Link } from "react-router-dom";
+import doorRepair from "./images/door-repair.png";
 
-function SignUpPage() {
+export function SignUp() {
   const [formData, setFormData] = useState({
     Fname: "",
-    Lname:"",
-    Gender:"",
+    Lname: "",
+    Gender: "",
     BirthDate: null,
-    Id:"", 
+    Id: "",
     email: "",
-    PhoneNum:"",
+    PhoneNum: "",
     password: "",
     confirmPassword: "",
   });
   const [errors, setErrors] = useState({});
-  //! to store the response message from the backend 
- // const [apiRespnse , SetApiRespnse]=useState("");
+  //! to store the response message from the backend
+  // const [apiRespnse , SetApiRespnse]=useState("");
   const validateForm = () => {
     const newErrors = {};
     if (!formData.Fname.trim()) newErrors.Fname = "First Name is required";
     if (!formData.Lname.trim()) newErrors.Lname = "Last Name is required";
     if (!formData.email.trim()) {
-    newErrors.email = 'Email is required.';
-    } else if (!/^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|icloud\.com|protonmail\.com|([a-zA-Z0-9._%+-]+\.)?edu\.dz|([a-zA-Z0-9._%+-]+\.)?gov\.dz|([a-zA-Z0-9._%+-]+\.)?djaweb\.dz|([a-zA-Z0-9._%+-]+\.)?algeriepost\.dz)$/.test(formData.email)) {
-      newErrors.email = 'Invalid email format.';
+      newErrors.email = "Email is required.";
+    } else if (
+      !/^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|icloud\.com|protonmail\.com|([a-zA-Z0-9._%+-]+\.)?edu\.dz|([a-zA-Z0-9._%+-]+\.)?gov\.dz|([a-zA-Z0-9._%+-]+\.)?djaweb\.dz|([a-zA-Z0-9._%+-]+\.)?algeriepost\.dz)$/.test(
+        formData.email
+      )
+    ) {
+      newErrors.email = "Invalid email format.";
     }
     if (!formData.password.trim()) newErrors.password = "Password is required";
     else if (formData.password.length < 6)
@@ -44,26 +50,27 @@ function SignUpPage() {
     if (!formData.PhoneNum.trim()) {
       newErrors.PhoneNum = "Phone number is required";
     } else if (!/^(06|07|05)\d{8}$/.test(formData.PhoneNum)) {
-      newErrors.PhoneNum = "Only algerian phone numbers are accepted , please enter a valid algerian number ";
+      newErrors.PhoneNum =
+        "Only algerian phone numbers are accepted , please enter a valid algerian number ";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-//! Function to send the form data to the backend using fetch Api
+  //! Function to send the form data to the backend using fetch Api
   // const PostDataToBackend = async()=>{
   //   try{
   //     //sends the http request to the url (end point where the data is send to )
   //     const response = await fetch("http://localhost:5000 .....",{
   //       method: "POST",
   //       headers:{
-  //         "Content-Type":"application/json", //Tell the backend that we are sending a json file 
+  //         "Content-Type":"application/json", //Tell the backend that we are sending a json file
   //       },
-  //       body: JSON.stringify(formData),// convert data to string 
+  //       body: JSON.stringify(formData),// convert data to string
   //     });
-  //     //convert(parse) the response to a javascript object 
+  //     //convert(parse) the response to a javascript object
   //     const data= await response.json();
-  //     // Response handeling 
+  //     // Response handeling
   //     if(response.ok){
   //       SetApiRespnse("sign up successful");
   //     }
@@ -74,10 +81,10 @@ function SignUpPage() {
   //   }
   //   //end of try !
   //   catch(error){
-  //     // unexpected errors 
+  //     // unexpected errors
   //     SetApiRespnse("Failed to connedt to the server");
   //   }
-  //   //end of catch 
+  //   //end of catch
   // };
 
   const handleSubmit = (e) => {
@@ -93,10 +100,9 @@ function SignUpPage() {
   //     PostDataToBackend();
   //   }
   // }
-  //! used w/out or w/ the backend 
+  //! used w/out or w/ the backend
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    
   };
 
   return (
@@ -106,78 +112,91 @@ function SignUpPage() {
     >
       <div className="row w-75 mx-auto d-flex justify-content-center align-items-center">
         {/* Left Side */}
-        <div className="col-md-6 p-5 bg-white rounded shadow" style={{height:"655px " , overflow:"auto"}}>
+        <div
+          className="col-md-6 p-5 bg-white rounded shadow"
+          style={{ height: "655px ", overflow: "auto" }}
+        >
           <h2 className="text-center mb-4">Welcome to Mzya.dari</h2>
           <p className="text-center">Please fill this to create an account</p>
           <form onSubmit={handleSubmit}>
             {/* 1 Row */}
             <div className="mb-3 row">
-                {/* First Name Input */}
-                <div className="col-md-6">
-                  <input
-                    type="text"
-                    name="Fname"
-                    value={formData.Fname}
-                    onChange={handleChange}
-                    placeholder="First Name"
-                    className={`form-control ${errors.Fname ? "is-invalid" : ""}`}
-                  />
-                  {errors.Fname && <div className="invalid-feedback">{errors.Fname}</div>}
-                </div>
-                
-                {/* Last Name Input */}
-                <div className="col-md-6">
-                  <input
-                    type="text"
-                    name="Lname"
-                    value={formData.Lname}
-                    onChange={handleChange}
-                    placeholder="Last Name"
-                    className={`form-control ${errors.Lname ? "is-invalid" : ""}`}
-                  />
-                  {errors.Lname && <div className="invalid-feedback">{errors.Lname}</div>}
-                </div>
+              {/* First Name Input */}
+              <div className="col-md-6">
+                <input
+                  type="text"
+                  name="Fname"
+                  value={formData.Fname}
+                  onChange={handleChange}
+                  placeholder="First Name"
+                  className={`form-control ${errors.Fname ? "is-invalid" : ""}`}
+                />
+                {errors.Fname && (
+                  <div className="invalid-feedback">{errors.Fname}</div>
+                )}
               </div>
-                {/* Gender */}
-              <Row className="mb-3">
-              
-            <Col md={12}>
-              <Form.Group>
-                <div className="d-flex justify-content-start align-items-center gap-4 mt-2">
-                  <h6 className="mb-0">Gender</h6>
-                  <Form.Check
-                    type="radio"
-                    label="Female"
-                    name="Gender"
-                    value="Female"
-                    onChange={(e) => setFormData({ ...formData, Gender: e.target.value })}
-                    required
-                  />
-                  
-                  <Form.Check
-                    type="radio"
-                    label="Male"
-                    name="Gender"
-                    value="Male"
-                    onChange={(e) => setFormData({ ...formData, Gender: e.target.value })}
-                    required
-                  />
-                  
-                
-                </div>
-              </Form.Group>
-              
-            </Col>  
-            {errors.Gender && (
-              <div className="invalid-feedback">{errors.Gender}</div>
-            )}
-               </Row>
-           {/* BirthDate */}
+
+              {/* Last Name Input */}
+              <div className="col-md-6">
+                <input
+                  type="text"
+                  name="Lname"
+                  value={formData.Lname}
+                  onChange={handleChange}
+                  placeholder="Last Name"
+                  className={`form-control ${errors.Lname ? "is-invalid" : ""}`}
+                />
+                {errors.Lname && (
+                  <div className="invalid-feedback">{errors.Lname}</div>
+                )}
+              </div>
+            </div>
+            {/* Gender */}
+            <Row className="mb-3">
+              <Col md={12}>
+                <Form.Group>
+                  <div className="d-flex justify-content-start align-items-center gap-4 mt-2">
+                    <h6 className="mb-0">Gender</h6>
+                    <Form.Check
+                      type="radio"
+                      label="Female"
+                      name="Gender"
+                      value="Female"
+                      onChange={(e) =>
+                        setFormData({ ...formData, Gender: e.target.value })
+                      }
+                      required
+                    />
+
+                    <Form.Check
+                      type="radio"
+                      label="Male"
+                      name="Gender"
+                      value="Male"
+                      onChange={(e) =>
+                        setFormData({ ...formData, Gender: e.target.value })
+                      }
+                      required
+                    />
+                  </div>
+                </Form.Group>
+              </Col>
+              {errors.Gender && (
+                <div className="invalid-feedback">{errors.Gender}</div>
+              )}
+            </Row>
+            {/* BirthDate */}
             <div className="mb-3">
-              <div className={`form-control d-flex align-items-center ${errors.BirthDate ? "is-invalid" : ""}`}>
+              <div
+                className={`form-control d-flex align-items-center ${
+                  errors.BirthDate ? "is-invalid" : ""
+                }`}
+              >
                 <DatePicker
                   selected={formData.BirthDate}
-                  onChange={(date) => setFormData({ ...formData, BirthDate: date })}
+                  onChange={(date) =>
+                    setFormData({ ...formData, BirthDate: date })
+                  }
                   placeholderText="Select your birth date"
                   dateFormat="yyyy/MM/dd"
                   maxDate={new Date("2006-12-31")}
@@ -187,7 +206,9 @@ function SignUpPage() {
                   className="flex-grow-1 border-0"
                 />
               </div>
-              {errors.BirthDate && <div className="invalid-feedback">{errors.BirthDate}</div>}
+              {errors.BirthDate && (
+                <div className="invalid-feedback">{errors.BirthDate}</div>
+              )}
             </div>
             {/* ID */}
             <div className="mb-3">
@@ -199,11 +220,9 @@ function SignUpPage() {
                 placeholder="Id"
                 className={`form-control ${errors.Id ? "is-invalid" : ""}`}
               />
-              {errors.Id && (
-                <div className="invalid-feedback">{errors.Id}</div>
-              )}
+              {errors.Id && <div className="invalid-feedback">{errors.Id}</div>}
             </div>
-                {/* Email Input */}
+            {/* Email Input */}
             <div className="mb-3">
               <input
                 type="email"
@@ -225,7 +244,9 @@ function SignUpPage() {
                 value={formData.PhoneNum}
                 onChange={handleChange}
                 placeholder="Phone number"
-                className={`form-control ${errors.PhoneNum ? "is-invalid" : ""}`}
+                className={`form-control ${
+                  errors.PhoneNum ? "is-invalid" : ""
+                }`}
               />
               {errors.PhoneNum && (
                 <div className="invalid-feedback">{errors.PhoneNum}</div>
@@ -239,7 +260,9 @@ function SignUpPage() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                className={`form-control ${
+                  errors.password ? "is-invalid" : ""
+                }`}
               />
               {errors.password && (
                 <div className="invalid-feedback">{errors.password}</div>
@@ -267,16 +290,16 @@ function SignUpPage() {
                 Sign up
               </button>
             </div>
-            
+
             {/* {apiResponse && <p className="text-center mt-3">{apiResponse}</p>} */}
           </form>
 
           <p className="text-center mt-3">
             <h6>you already have an account?</h6>
-            <a href="">log in</a>
+            <Link className="nav-link text-dark" to="/login">
+              Log in
+            </Link>
           </p>
-      
-          
         </div>
 
         {/* Right Side */}
@@ -285,7 +308,7 @@ function SignUpPage() {
           style={{ height: "600px", padding: "20px" }}
         >
           <img
-            src="heart_filled.png"
+            src={doorRepair}
             alt="Sign Up"
             className="img-fluid"
             style={{ width: "80%", height: "100%" }}
@@ -295,5 +318,3 @@ function SignUpPage() {
     </div>
   );
 }
-
-export default SignUpPage;

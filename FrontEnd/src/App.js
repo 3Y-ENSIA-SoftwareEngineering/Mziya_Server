@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './screens/Login.jsx';
-import { SignUp } from './Components/SignUpScreen.jsx';
+import { SignUp } from './Components/SignUpPage.jsx';
 import { FindJob } from './screens/FindJob.jsx';
 import { Header } from './Components/Header.jsx';
 import { MainContent } from './Components/MainContent.jsx';
@@ -37,6 +37,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/findjob" element={<FindJob />} />
           <Route path="/signup" element={<SignUp />} />
+          {/* <Route path="/makepost" element={<SignUp />} /> */}
         </Routes>
       </div>
     </Router>

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./../CSSFiles/Login.css";
+import { Link } from "react-router-dom";
+import doorRepair from "./../Components/images/door-repair.png";
 // import "./../assets/login.png";
 
 const Login = () => {
@@ -36,13 +38,13 @@ const Login = () => {
 
   return (
     <div className="login-page">
-      <div className="image-container">
-        <img
-          src="./../assets/login.png"
-          alt="Illustration"
-          className="login-image"
-        />
-      </div>
+      <img
+        src={doorRepair}
+        alt="Illustration"
+        className="login-image"
+        style={{ width: "25vw", height: "90vh", marginRight: "15vw" }}
+      />
+
       <div className="login-container">
         <h2>Hi Again!</h2>
         <form onSubmit={handleSubmit}>
@@ -81,7 +83,10 @@ const Login = () => {
           </button>
           <div className="signup">
             <p>
-              I don't have an account. <a href="#">Sign up</a>
+              I don't have an account.
+              <Link className="nav-link text-white" to="/signup">
+                Sign up
+              </Link>
             </p>
           </div>
         </form>
