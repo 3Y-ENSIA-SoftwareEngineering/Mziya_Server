@@ -19,7 +19,7 @@ function App() {
     <Router>
       <div className="App">
         {/* Common Header */}
-        <Navbar />
+        
 
         {/* Define routes for different screens */}
         <Routes>
@@ -27,6 +27,7 @@ function App() {
             path="/"
             element={
               <>
+              <Header/>
                 <MainContent />
                 <Service />
                 <WhyChooseUs />

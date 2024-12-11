@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import doorRepair from "./images/door-repair.png";
+import { Navbar } from "./NavBar.jsx";
 
 export function SignUp() {
   const [formData, setFormData] = useState({
@@ -106,213 +107,219 @@ export function SignUp() {
   };
 
   return (
-    <div
-      className="container-fluid vh-100 d-flex align-items-center justify-content-center"
-      style={{ backgroundColor: "white" }}
-    >
-      <div className="row w-75 mx-auto d-flex justify-content-center align-items-center">
-        {/* Left Side */}
-        <div
-          className="col-md-6 p-5 bg-white rounded shadow"
-          style={{ height: "655px ", overflow: "auto" }}
-        >
-          <h2 className="text-center mb-4">Welcome to Mzya.dari</h2>
-          <p className="text-center">Please fill this to create an account</p>
-          <form onSubmit={handleSubmit}>
-            {/* 1 Row */}
-            <div className="mb-3 row">
-              {/* First Name Input */}
-              <div className="col-md-6">
-                <input
-                  type="text"
-                  name="Fname"
-                  value={formData.Fname}
-                  onChange={handleChange}
-                  placeholder="First Name"
-                  className={`form-control ${errors.Fname ? "is-invalid" : ""}`}
-                />
-                {errors.Fname && (
-                  <div className="invalid-feedback">{errors.Fname}</div>
+    <div>
+      <Navbar />
+      <div
+        className="container-fluid vh-100 d-flex align-items-center justify-content-center"
+        style={{ backgroundColor: "white" }}
+      >
+        <div className="row w-75 mx-auto d-flex justify-content-center align-items-center">
+          {/* Left Side */}
+          <div
+            className="col-md-6 p-5 bg-white rounded shadow"
+            style={{ height: "655px ", overflow: "auto" }}
+          >
+            <h2 className="text-center mb-4">Welcome to Mzya.dari</h2>
+            <p className="text-center">Please fill this to create an account</p>
+            <form onSubmit={handleSubmit}>
+              {/* 1 Row */}
+              <div className="mb-3 row">
+                {/* First Name Input */}
+                <div className="col-md-6">
+                  <input
+                    type="text"
+                    name="Fname"
+                    value={formData.Fname}
+                    onChange={handleChange}
+                    placeholder="First Name"
+                    className={`form-control ${
+                      errors.Fname ? "is-invalid" : ""
+                    }`}
+                  />
+                  {errors.Fname && (
+                    <div className="invalid-feedback">{errors.Fname}</div>
+                  )}
+                </div>
+                {/* Last Name Input */}
+                <div className="col-md-6">
+                  <input
+                    type="text"
+                    name="Lname"
+                    value={formData.Lname}
+                    onChange={handleChange}
+                    placeholder="Last Name"
+                    className={`form-control ${
+                      errors.Lname ? "is-invalid" : ""
+                    }`}
+                  />
+                  {errors.Lname && (
+                    <div className="invalid-feedback">{errors.Lname}</div>
+                  )}
+                </div>
+              </div>
+              {/* Gender */}
+              <Row className="mb-3">
+                <Col md={12}>
+                  <Form.Group>
+                    <div className="d-flex justify-content-start align-items-center gap-4 mt-2">
+                      <h6 className="mb-0">Gender</h6>
+                      <Form.Check
+                        type="radio"
+                        label="Female"
+                        name="Gender"
+                        value="Female"
+                        onChange={(e) =>
+                          setFormData({ ...formData, Gender: e.target.value })
+                        }
+                        required
+                      />
+                      <Form.Check
+                        type="radio"
+                        label="Male"
+                        name="Gender"
+                        value="Male"
+                        onChange={(e) =>
+                          setFormData({ ...formData, Gender: e.target.value })
+                        }
+                        required
+                      />
+                    </div>
+                  </Form.Group>
+                </Col>
+                {errors.Gender && (
+                  <div className="invalid-feedback">{errors.Gender}</div>
+                )}
+              </Row>
+              {/* BirthDate */}
+              <div className="mb-3">
+                <div
+                  className={`form-control d-flex align-items-center ${
+                    errors.BirthDate ? "is-invalid" : ""
+                  }`}
+                >
+                  <DatePicker
+                    selected={formData.BirthDate}
+                    onChange={(date) =>
+                      setFormData({ ...formData, BirthDate: date })
+                    }
+                    placeholderText="Select your birth date"
+                    dateFormat="yyyy/MM/dd"
+                    maxDate={new Date("2006-12-31")}
+                    showYearDropdown
+                    scrollableYearDropdown
+                    yearDropdownItemNumber={100}
+                    className="flex-grow-1 border-0"
+                  />
+                </div>
+                {errors.BirthDate && (
+                  <div className="invalid-feedback">{errors.BirthDate}</div>
                 )}
               </div>
-
-              {/* Last Name Input */}
-              <div className="col-md-6">
+              {/* ID */}
+              <div className="mb-3">
                 <input
                   type="text"
-                  name="Lname"
-                  value={formData.Lname}
+                  name="Id"
+                  value={formData.Id}
                   onChange={handleChange}
-                  placeholder="Last Name"
-                  className={`form-control ${errors.Lname ? "is-invalid" : ""}`}
+                  placeholder="Id"
+                  className={`form-control ${errors.Id ? "is-invalid" : ""}`}
                 />
-                {errors.Lname && (
-                  <div className="invalid-feedback">{errors.Lname}</div>
+                {errors.Id && (
+                  <div className="invalid-feedback">{errors.Id}</div>
                 )}
               </div>
-            </div>
-            {/* Gender */}
-            <Row className="mb-3">
-              <Col md={12}>
-                <Form.Group>
-                  <div className="d-flex justify-content-start align-items-center gap-4 mt-2">
-                    <h6 className="mb-0">Gender</h6>
-                    <Form.Check
-                      type="radio"
-                      label="Female"
-                      name="Gender"
-                      value="Female"
-                      onChange={(e) =>
-                        setFormData({ ...formData, Gender: e.target.value })
-                      }
-                      required
-                    />
-
-                    <Form.Check
-                      type="radio"
-                      label="Male"
-                      name="Gender"
-                      value="Male"
-                      onChange={(e) =>
-                        setFormData({ ...formData, Gender: e.target.value })
-                      }
-                      required
-                    />
+              {/* Email Input */}
+              <div className="mb-3">
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  className={`form-control ${errors.email ? "is-invalid" : ""}`}
+                />
+                {errors.email && (
+                  <div className="invalid-feedback">{errors.email}</div>
+                )}
+              </div>
+              {/* Phone number  */}
+              <div className="mb-3">
+                <input
+                  type="text"
+                  name="PhoneNum"
+                  value={formData.PhoneNum}
+                  onChange={handleChange}
+                  placeholder="Phone number"
+                  className={`form-control ${
+                    errors.PhoneNum ? "is-invalid" : ""
+                  }`}
+                />
+                {errors.PhoneNum && (
+                  <div className="invalid-feedback">{errors.PhoneNum}</div>
+                )}
+              </div>
+              {/* Password Input */}
+              <div className="mb-3">
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Password"
+                  className={`form-control ${
+                    errors.password ? "is-invalid" : ""
+                  }`}
+                />
+                {errors.password && (
+                  <div className="invalid-feedback">{errors.password}</div>
+                )}
+              </div>
+              {/* Confirm Password Input */}
+              <div className="mb-3">
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirm Password"
+                  className={`form-control ${
+                    errors.confirmPassword ? "is-invalid" : ""
+                  }`}
+                />
+                {errors.confirmPassword && (
+                  <div className="invalid-feedback">
+                    {errors.confirmPassword}
                   </div>
-                </Form.Group>
-              </Col>
-              {errors.Gender && (
-                <div className="invalid-feedback">{errors.Gender}</div>
-              )}
-            </Row>
-            {/* BirthDate */}
-            <div className="mb-3">
-              <div
-                className={`form-control d-flex align-items-center ${
-                  errors.BirthDate ? "is-invalid" : ""
-                }`}
-              >
-                <DatePicker
-                  selected={formData.BirthDate}
-                  onChange={(date) =>
-                    setFormData({ ...formData, BirthDate: date })
-                  }
-                  placeholderText="Select your birth date"
-                  dateFormat="yyyy/MM/dd"
-                  maxDate={new Date("2006-12-31")}
-                  showYearDropdown
-                  scrollableYearDropdown
-                  yearDropdownItemNumber={100}
-                  className="flex-grow-1 border-0"
-                />
+                )}
               </div>
-              {errors.BirthDate && (
-                <div className="invalid-feedback">{errors.BirthDate}</div>
-              )}
-            </div>
-            {/* ID */}
-            <div className="mb-3">
-              <input
-                type="text"
-                name="Id"
-                value={formData.Id}
-                onChange={handleChange}
-                placeholder="Id"
-                className={`form-control ${errors.Id ? "is-invalid" : ""}`}
-              />
-              {errors.Id && <div className="invalid-feedback">{errors.Id}</div>}
-            </div>
-            {/* Email Input */}
-            <div className="mb-3">
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Email"
-                className={`form-control ${errors.email ? "is-invalid" : ""}`}
-              />
-              {errors.email && (
-                <div className="invalid-feedback">{errors.email}</div>
-              )}
-            </div>
-            {/* Phone number  */}
-            <div className="mb-3">
-              <input
-                type="text"
-                name="PhoneNum"
-                value={formData.PhoneNum}
-                onChange={handleChange}
-                placeholder="Phone number"
-                className={`form-control ${
-                  errors.PhoneNum ? "is-invalid" : ""
-                }`}
-              />
-              {errors.PhoneNum && (
-                <div className="invalid-feedback">{errors.PhoneNum}</div>
-              )}
-            </div>
-            {/* Password Input */}
-            <div className="mb-3">
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Password"
-                className={`form-control ${
-                  errors.password ? "is-invalid" : ""
-                }`}
-              />
-              {errors.password && (
-                <div className="invalid-feedback">{errors.password}</div>
-              )}
-            </div>
-            {/* Confirm Password Input */}
-            <div className="mb-3">
-              <input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                placeholder="Confirm Password"
-                className={`form-control ${
-                  errors.confirmPassword ? "is-invalid" : ""
-                }`}
-              />
-              {errors.confirmPassword && (
-                <div className="invalid-feedback">{errors.confirmPassword}</div>
-              )}
-            </div>
-            {/* Submit Button */}
-            <div className="text-center">
-              <button type="submit" className="btn btn-primary w-100">
-                Sign up
-              </button>
-            </div>
-
-            {/* {apiResponse && <p className="text-center mt-3">{apiResponse}</p>} */}
-          </form>
-
-          <p className="text-center mt-3">
-            <h6>you already have an account?</h6>
-            <Link className="nav-link text-dark" to="/login">
-              Log in
-            </Link>
-          </p>
-        </div>
-
-        {/* Right Side */}
-        <div
-          className="col-md-6 d-flex align-items-center justify-content-center bg-yellow"
-          style={{ height: "600px", padding: "20px" }}
-        >
-          <img
-            src={doorRepair}
-            alt="Sign Up"
-            className="img-fluid"
-            style={{ width: "80%", height: "100%" }}
-          />
+              {/* Submit Button */}
+              <div className="text-center">
+                <button type="submit" className="btn btn-primary w-100">
+                  Sign up
+                </button>
+              </div>
+              {/* {apiResponse && <p className="text-center mt-3">{apiResponse}</p>} */}
+            </form>
+            <p className="text-center mt-3">
+              <h6>you already have an account?</h6>
+              <Link className="nav-link text-dark" to="/login">
+                Log in
+              </Link>
+            </p>
+          </div>
+          {/* Right Side */}
+          <div
+            className="col-md-6 d-flex align-items-center justify-content-center bg-yellow"
+            style={{ height: "600px", padding: "20px" }}
+          >
+            <img
+              src={doorRepair}
+              alt="Sign Up"
+              className="img-fluid"
+              style={{ width: "80%", height: "100%" }}
+            />
+          </div>
         </div>
       </div>
     </div>

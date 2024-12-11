@@ -6,6 +6,7 @@ import satisfactionicon from "./images/satisfaction-icon.png";
 import joboffers from "./images/job-offers-icon.png";
 import searchicon from "./images/search-icon.png";
 import calendar from "./images/calendar-icon.png";
+import { Link, useNavigate } from "react-router-dom";
 
 export const MainContent = () => (
   <main className="main-content">
@@ -19,7 +20,11 @@ export const MainContent = () => (
       <h1>homeService in a </h1>
       <h1>record time?</h1>
       <h1> We got you!</h1>
-      <button className="cta-button">Get Started NOW!</button>
+      <button className="cta-button">
+        <Link className="nav-link text-white" to="/signup">
+          Get Started NOW!
+        </Link>
+      </button>
 
       {/* Features Section */}
       <div className="features">
