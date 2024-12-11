@@ -1,4 +1,4 @@
-const Job = require('../models/Job'); // Job model
+import Job from '../models/Job.js'; // Job model
 
 class JobService {
   // Create a new job in the database
@@ -14,4 +14,4 @@ class JobService {
   // Additional methods for job-related operations can go here
 }
 
-module.exports = JobService;
+export default JobService;

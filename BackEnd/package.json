@@ -2,6 +2,7 @@
   "name": "authentication-backend",
   "version": "1.0.0",
   "description": "Full authentication backend with Node.js and PostgreSQL",
+  "type": "module",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",

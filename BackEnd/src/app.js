@@ -1,9 +1,10 @@
-// src/app.js
-const express = require('express');
-const cors = require('cors');
-const authRoutes = require('./routes/authRoutes');
-const jobRoutes = require('./routes/jobRoutes');
-require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
+import authRoutes from './routes/authRoutes.js';
+import jobRoutes from './routes/jobRoutes.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
@@ -28,4 +29,4 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-module.exports = app;
+export default app;

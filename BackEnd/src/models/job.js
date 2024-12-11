@@ -1,4 +1,4 @@
-const supabase = require('../config/database');
+import supabase from '../config/database.js';
 
 class Job {
   // Create a new job
@@ -45,4 +45,4 @@ class Job {
   }
 }
 
-module.exports = Job;
+export default Job;

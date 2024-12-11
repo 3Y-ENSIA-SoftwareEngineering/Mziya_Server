@@ -1,5 +1,5 @@
 // Middleware to validate job creation input
-const { body, validationResult } = require('express-validator')
+import { body, validationResult } from 'express-validator';
 
 const jobTypeOptions = ['small_task', 'large_task', 'part_time', 'full_time'];
 const jobCategoryOptions = ['Plumbing', 'Electrical', 'Carpentry', 'Cleaning', 'Gardening', 'Babysitting'];
@@ -165,4 +165,4 @@ const validateJobInput = [
 
 ];
 
-module.exports = validateJobInput;
+export default validateJobInput;
