@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import { Navbar } from "./NavBar.jsx";
+import { supabase } from '../supabaseClient.js';
 export const Profile = () => {
   const [formData, setFormData] = useState({
     firstName: "John", // Set initial value for display
