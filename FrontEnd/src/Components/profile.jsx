@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 
-const Profile = () => {
+export const Profile = () => {
   const [formData, setFormData] = useState({
     firstName: "John", // Set initial value for display
-    lastName: "Doe",    // Set initial value for display
+    lastName: "Doe", // Set initial value for display
     email: "john.doe@example.com", // Set initial value for display
     location: "",
     currentPassword: "",
@@ -149,7 +149,10 @@ const Profile = () => {
             />
           </div>
           {/* Change Password Button */}
-          <div className="d-flex justify-content-center" style={{ marginTop: "2vh" }}>
+          <div
+            className="d-flex justify-content-center"
+            style={{ marginTop: "2vh" }}
+          >
             <button
               type="submit"
               className="btn"
@@ -169,31 +172,52 @@ const Profile = () => {
         <div className="col-lg-6">
           <div className="mb-4">
             <h4 className="text-secondary">My Job Deals</h4>
-            <div className="p-3 border rounded" style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}>
+            <div
+              className="p-3 border rounded"
+              style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
+            >
               <p className="text-muted text-center">No deals yet</p>
             </div>
-            <div className="p-3 border rounded" style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}>
+            <div
+              className="p-3 border rounded"
+              style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
+            >
               <p className="text-muted text-center">No deals yet</p>
             </div>
-            <div className="p-3 border rounded" style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}>
+            <div
+              className="p-3 border rounded"
+              style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
+            >
               <p className="text-muted text-center">No deals yet</p>
             </div>
             {/* More job deal divs here */}
           </div>
           <div>
             <h4 className="text-secondary">My Job Offers</h4>
-            <div className="p-3 border rounded" style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}>
+            <div
+              className="p-3 border rounded"
+              style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
+            >
               <p className="text-muted text-center">No offers yet</p>
             </div>
-            <div className="p-3 border rounded" style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}>
+            <div
+              className="p-3 border rounded"
+              style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
+            >
               <p className="text-muted text-center">No offers yet</p>
             </div>
-            <div className="p-3 border rounded" style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}>
+            <div
+              className="p-3 border rounded"
+              style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
+            >
               <p className="text-muted text-center">No offers yet</p>
             </div>
             {/* More job offer divs here */}
           </div>
-          <div className="d-flex justify-content-center" style={{ marginTop: "2vh" }}>
+          <div
+            className="d-flex justify-content-center"
+            style={{ marginTop: "2vh" }}
+          >
             <button
               type="submit"
               className="btn"
@@ -212,5 +236,3 @@ const Profile = () => {
     </div>
   );
 };
-
-export default Profile;

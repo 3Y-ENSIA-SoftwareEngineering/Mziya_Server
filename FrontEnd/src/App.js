@@ -12,6 +12,7 @@ import { ContactUs } from './Components/ContactUs.jsx';
 import { Footer } from './Components/Footer.jsx';
 import { Navbar } from './Components/NavBar.jsx';
 import {PostingPage} from './Components/PostingPage.jsx';
+import {Profile} from './Components/profile.jsx';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/findjob" element={<FindJob />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/makepost" element={<PostingPage />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </Router>
