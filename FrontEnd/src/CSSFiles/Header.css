@@ -1,0 +1,41 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* Full width */
+  max-width: 100%; /* Matches App width */
+  padding: 1rem 2rem;
+  background-color:rgba(20, 34, 87, 1);
+  color: #fff;
+  box-sizing: border-box;
+}
+
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .nav {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .login {
+    background-color: transparent;
+    color: #fff;
+  }
+  
+  .signup {
+    background-color:rgba(21, 178, 245, 1);
+    color: #fff;
+    border-radius: 5px;
+  }
+  
