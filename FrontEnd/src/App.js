@@ -9,8 +9,8 @@ import { Service } from './Components/Service.jsx';
 import { WhyChooseUs } from './Components/whychooseus.jsx';
 import { HowItWorks } from './Components/HowItWorks.jsx';
 import { ContactUs } from './Components/ContactUs.jsx';
-import { Footer } from './Components/Footer.jsx';
-import { Navbar } from './Components/NavBar.jsx';
+import { FooterUp } from './Components/FooterUp.jsx';
+import { FooterDown } from './Components/FooterDown.jsx';
 import {PostingPage} from './Components/PostingPage.jsx';
 import {Profile} from './Components/profile.jsx';
 
@@ -33,7 +33,8 @@ function App() {
                 <WhyChooseUs />
                 <HowItWorks />
                 <ContactUs />
-                <Footer />
+                <FooterUp />
+                < FooterDown/>
               </>
             }
           />
