@@ -8,7 +8,7 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3001' })); // !! the port should be changed to the frontend port
 app.use(express.json());
 
 // Routes
