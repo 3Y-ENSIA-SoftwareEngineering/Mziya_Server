@@ -1,12 +1,28 @@
 import React, { useState } from "react";
-import "./../CSSFiles/ContactUs.css";
 
 function Modal({ message, type, onClose }) {
   return (
-    <div className="modal-overlay">
-      <div className={`modal ${type}`}>
-        <p>{message}</p>
-        <button onClick={onClose} className="modal-close-button">
+    <div 
+      className="position-fixed top-0 start-0 w-100 h-100 bg-black bg-opacity-50 d-flex justify-content-center align-items-center"
+      style={{ zIndex: 1000 }}
+    >
+      <div 
+        className={`bg-white rounded-3 p-4 text-center shadow ${type === 'success' ? 'border border-primary' : 'border border-danger'}`}
+        style={{ 
+          maxWidth: '400px', 
+          width: '90%',
+          animation: 'fadeIn 0.3s ease' 
+        }}
+      >
+        <p className="mb-3 text-dark">{message}</p>
+        <button 
+          onClick={onClose} 
+          className="btn text-white"
+          style={{ 
+            backgroundColor: 'rgba(21, 178, 245, 1)',
+            ':hover': { backgroundColor: 'rgba(20, 34, 87, 1)' }
+          }}
+        >
           Close
         </button>
       </div>
@@ -78,62 +94,122 @@ export function ContactUs() {
   };
 
   return (
-    <div className="contact-us-wrapper">
-      <div className="contact-us-info">
-        <h2>Contact Us</h2>
-        <p>
-          Mziya Team is here to answer your inquiries, fill out the form and let
-          us know your thoughts!
-        </p>
-      </div>
-      <div className="contact-us-form">
-        <form onSubmit={handleSubmit}>
-          <div className="input-row">
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              className="form-input half-input"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-            <input
-              type="text"
-              name="surname"
-              placeholder="Surname"
-              className="form-input half-input"
-              value={formData.surname}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            className="form-input full-input"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          <textarea
-            name="message"
-            placeholder="Your message"
-            className="form-textarea"
-            value={formData.message}
-            onChange={handleChange}
-            required
-          ></textarea>
-          <button
-            type="submit"
-            className="submit-button"
-            disabled={isSubmitting}
+    <div className="container-fluid vh-100 d-flex align-items-center" style={{ backgroundColor: '#ffffff' }}>
+      <div className="row w-100 align-items-center">
+        <div className="col-md-6 ps-5">
+          <h2 
+            className="mb-2" 
+            style={{ 
+              color: 'rgba(21, 178, 245, 1)', 
+              fontSize: '2rem' ,
+             marginRight: '11vw'
+            }}
           >
-            {isSubmitting ? "Sending..." : "Submit"}
-          </button>
-        </form>
+            Contact Us
+          </h2>
+          <p 
+            className="text-dark" 
+            style={{ 
+             
+              lineHeight: 1.8 ,
+               marginLeft: '11vw',
+               fontWeight: 'bold',
+               color: 'rgba(36, 32, 128, 1)'
+            }}
+          >
+            Mziya Team is here to answer your inquiries,<br />
+             fill out the form and let us<br/> know your thoughts!
+          </p>
+        </div>
+        
+        <div className="col-md-6 d-flex justify-content-center">
+          <form onSubmit={handleSubmit} className="w-75">
+            <div className="row mb-3">
+              <div className="col-6">
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  className="form-control rounded-pill"
+                  style={{
+                    borderColor: 'rgba(21, 178, 245, 1)',
+                    boxShadow: '0px 6px 8px rgba(0, 0, 0, 0.1)'
+                  }}
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="col-6">
+                <input
+                  type="text"
+                  name="surname"
+                  placeholder="Surname"
+                  className="form-control rounded-pill"
+                  style={{
+                    borderColor: 'rgba(21, 178, 245, 1)',
+                    boxShadow: '0px 6px 8px rgba(0, 0, 0, 0.1)'
+                  }}
+                  value={formData.surname}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            
+            <div className="mb-3">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                className="form-control rounded-pill"
+                style={{
+                  borderColor: 'rgba(21, 178, 245, 1)',
+                  boxShadow: '0px 6px 8px rgba(0, 0, 0, 0.1)'
+                }}
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <textarea
+                name="message"
+                placeholder="Your message"
+                className="form-control rounded-3"
+                style={{
+                  height: '20vh',
+                  borderColor: 'rgba(21, 178, 245, 1)',
+                  boxShadow: '0px 6px 8px rgba(0, 0, 0, 0.1)',
+                  resize: 'none',
+                  marginTop: '2vh',        // Adjust the top margin as needed
+                  borderRadius: '12px'     // Adjust the border-radius to your preference
+                }}
+                value={formData.message}
+                onChange={handleChange}
+                required
+              ></textarea>
+            </div>
+            
+            <button
+              type="submit"
+              className="btn w-100 text-white rounded-pill"
+              disabled={isSubmitting}
+              style={{
+                backgroundColor: 'rgba(20, 34, 87, 1)',
+                padding: '12px',
+                transition: 'all 0.3s ease',
+                boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)'
+              }}
+            >
+              {isSubmitting ? "Sending..." : "Submit"}
+            </button>
+
+          </form>
+        </div>
       </div>
+
       {modalInfo.show && (
         <Modal
           message={modalInfo.message}
