@@ -1,74 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar } from "./../Components/NavBar";
 import JobCard from "./../Components/JobCard";
 import { Footer } from "./../Components/Footer.jsx";
 import "./../CSSFiles/footer.css";
 
 const FindJob = () => {
-  const jobs = [
-    {
-      name: "Amel Feddag",
-      location: "Algeria",
-      title: "Post Title",
-      description: "Presenting you the opportunity to work...",
-      price: 25,
-      category: "Garden, Plumbing",
-      time: "1h",
-      contact: "+213 55050496",
-    },
-    {
-      name: "Amel Feddag",
-      location: "Algeria",
-      title: "Post Title",
-      description: "Presenting you the opportunity to work...",
-      price: 25,
-      category: "Garden, Plumbing",
-      time: "1h",
-      contact: "+213 55050496",
-    },
-    {
-      name: "Amel Feddag",
-      location: "Algeria",
-      title: "Post Title",
-      description: "Presenting you the opportunity to work...",
-      price: 25,
-      category: "Garden, Plumbing",
-      time: "1h",
-      contact: "+213 55050496",
-    },
-    {
-      name: "Amel Feddag",
-      location: "Algeria",
-      title: "Post Title",
-      description: "Presenting you the opportunity to work...",
-      price: 25,
-      category: "Garden, Plumbing",
-      time: "1h",
-      contact: "+213 55050496",
-    },
-    {
-      name: "Amel Feddag",
-      location: "Algeria",
-      title: "Post Title",
-      description: "Presenting you the opportunity to work...",
-      price: 25,
-      category: "Garden, Plumbing",
-      time: "1h",
-      contact: "+213 55050496",
-    },
-    {
-      name: "Amel Feddag",
-      location: "Algeria",
-      title: "Post Title",
-      description: "Presenting you the opportunity to work...",
-      price: 25,
-      category: "Garden, Plumbing",
-      time: "1h",
-      contact: "+213 55050496",
-    },
-  ];
-
+  const [jobs, setJobs] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
+
+  // Fetch jobs from the backend
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch("https://your-backend-api.com/jobs");
+        if (!response.ok) {
+          throw new Error("Failed to fetch jobs");
+        }
+        const data = await response.json();
+        setJobs(data);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      }
+    };
+
+    fetchJobs();
+  }, []);
 
   const handleSelect = (option) => {
     setSelectedOption(option);
@@ -119,38 +75,92 @@ const FindJob = () => {
           >
             <div className="options d-flex flex-column align-items-start mt-5 ">
               <h5 className="mb-2">Sort by:</h5>
-              <ul className="list-unstyled ">
-                <li className="mb-1">
-                  <button
-                    className="btn btn-link w-100 text-start"
-                    onClick={() => handleSelect("Category")}
-                  >
-                    Category
-                  </button>
+              <ul
+                className="list-unstyled "
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                }}
+              >
+                <li
+                  className="mb-1"
+                  style={{
+                    cursor: "pointer",
+                    padding: "10px",
+                    borderRadius: "8px",
+                    backgroundColor: "#f9f9f9",
+                    marginBottom: "10px",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "#e9ecef";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "#f9f9f9";
+                  }}
+                  onClick={() => handleSelect("Category")}
+                >
+                  Category
                 </li>
-                <li className="mb-1">
-                  <button
-                    className="btn btn-link w-100 text-start"
-                    onClick={() => handleSelect("Closest Jobs")}
-                  >
-                    Closest Jobs
-                  </button>
+                <li
+                  className="mb-1"
+                  style={{
+                    cursor: "pointer",
+                    padding: "10px",
+                    borderRadius: "8px",
+                    backgroundColor: "#f9f9f9",
+                    marginBottom: "10px",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "#e9ecef";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "#f9f9f9";
+                  }}
+                  onClick={() => handleSelect("Closest Jobs")}
+                >
+                  Closest Jobs
                 </li>
-                <li className="mb-1">
-                  <button
-                    className="btn btn-link w-100 text-start"
-                    onClick={() => handleSelect("Best Price")}
-                  >
-                    Best Price
-                  </button>
+                <li
+                  className="mb-1"
+                  style={{
+                    cursor: "pointer",
+                    padding: "10px",
+                    borderRadius: "8px",
+                    backgroundColor: "#f9f9f9",
+                    marginBottom: "10px",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "#e9ecef";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "#f9f9f9";
+                  }}
+                  onClick={() => handleSelect("Best Price")}
+                >
+                  Best Price
                 </li>
-                <li className="mb-1">
-                  <button
-                    className="btn btn-link w-100 text-start"
-                    onClick={() => handleSelect("Best Rating")}
-                  >
-                    Best Rating
-                  </button>
+                <li
+                  className="mb-1"
+                  style={{
+                    cursor: "pointer",
+                    padding: "10px",
+                    borderRadius: "8px",
+                    backgroundColor: "#f9f9f9",
+                    marginBottom: "10px",
+                    transition: "all 0.3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "#e9ecef";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "#f9f9f9";
+                  }}
+                  onClick={() => handleSelect("Best Rating")}
+                >
+                  Best Rating
                 </li>
               </ul>
             </div>
@@ -159,53 +169,19 @@ const FindJob = () => {
           {/* Job List */}
           <div style={{ flexGrow: 1, height: "80vh", paddingBottom: "5vh" }}>
             <div className="row">
-              {jobs.map((job, index) => (
-                <div key={index} className="col-12 mb-4">
-                  <JobCard job={job} />
-                </div>
-              ))}
+              {jobs.length > 0 ? (
+                jobs.map((job, index) => (
+                  <div key={index} className="col-12 mb-4">
+                    <JobCard job={job} />
+                  </div>
+                ))
+              ) : (
+                <p>Loading jobs...</p>
+              )}
             </div>
           </div>
         </div>
       </div>
-      {/* <footer className="footer-section">
-        <div className="footer-content">
-          <div className="footer-left">
-            <h3>Mziya.DARI</h3>
-            <p>
-              Mziya is your one and only destination for finding a job
-              <br /> in HomeServices, and getting yourself workers too!
-            </p>
-            <div className="social-icons">
-              <i className="fab fa-youtube"></i>
-              <i className="fab fa-instagram"></i>
-              <i className="fab fa-twitter"></i>
-              <i className="fab fa-envelope"></i>
-            </div>
-          </div>
-          <div className="footer-links">
-            <div>
-              <h4>Company</h4>
-              <ul>
-                <li>About us</li>
-                <li>Services</li>
-                <li>Contact</li>
-              </ul>
-            </div>
-            <div>
-              <h4>Legal</h4>
-              <ul>
-                <li>Terms</li>
-                <li>Privacy</li>
-                <li>License</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>©2024 Mziya.DARI. All rights reserved</p>
-        </div>
-      </footer> */}
     </div>
   );
 };
