@@ -39,10 +39,7 @@ export const Profile = () => {
   return (
     <div>
       <Navbar />
-      <div
-        className="container mt-5 p-4 border rounded shadow-lg"
-        style={{ backgroundColor: "#f9f9f9" }}
-      >
+      <div  style={{ margin: '4vw' }}>
         <div className="row">
           {/* Profile Info Section */}
           <div className="col-lg-6">
