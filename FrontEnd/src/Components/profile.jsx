@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import { Navbar } from "./NavBar.jsx";
-import { supabase } from '../supabaseClient.js';
+// import { supabase } from '../supabaseClient.js';
 export const Profile = () => {
   const [formData, setFormData] = useState({
     firstName: "John", // Set initial value for display
@@ -40,7 +40,7 @@ export const Profile = () => {
   return (
     <div>
       <Navbar />
-      <div  style={{ margin: '4vw' }}>
+      <div style={{ margin: "4vw" }}>
         <div className="row">
           {/* Profile Info Section */}
           <div className="col-lg-6">
