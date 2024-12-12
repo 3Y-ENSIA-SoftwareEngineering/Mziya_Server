@@ -82,6 +82,7 @@ rm -rf node_modules
 npm install
 
 3/ Run the Development Server
+cd FrontEnd
 npm start
 
 4/ Component Descriptions
