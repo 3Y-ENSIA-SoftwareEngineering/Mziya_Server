@@ -43,6 +43,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/makepost" element={<PostingPage />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/contact" element={<ContactUs />} />
         </Routes>
       </div>
     </Router>

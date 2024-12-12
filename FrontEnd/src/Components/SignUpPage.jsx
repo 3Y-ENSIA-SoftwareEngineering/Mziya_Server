@@ -303,7 +303,7 @@ export function SignUp() {
             </form>
             <p className="text-center mt-3">
               <h6>you already have an account?</h6>
-              <Link className="nav-link text-dark" to="/login">
+              <Link className="nav-link text-blue" to="/login">
                 Log in
               </Link>
             </p>
