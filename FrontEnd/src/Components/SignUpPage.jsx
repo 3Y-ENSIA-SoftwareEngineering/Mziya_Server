@@ -53,11 +53,10 @@ export function SignUp() {
     }
     if (!formData.PhoneNum.trim()) {
       newErrors.PhoneNum = "Phone number is required";
-    } else if (!/^(05|06|07)\d{8}$/.test(formData.PhoneNum)) {
-      newErrors.PhoneNum = "Please enter a valid Algerian phone number (starting with 05, 06, or 07 and exactly 10 digits)";
+    } else if (!/^(06|07|05)\d{8}$/.test(formData.PhoneNum)) {
+      newErrors.PhoneNum =
+        "Only algerian phone numbers are accepted , please enter a valid algerian number ";
     }
-    
-    
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -144,7 +143,6 @@ export function SignUp() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
 
   return (
     <div>

@@ -1,12 +1,12 @@
 import React from "react";
-import "./../CSSFiles/whychooseus.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import empoweringIcon from "./images/empowering-icon.png";
 import safetyIcon from "./images/safety-icon.png";
 import appointmentsIcon from "./images/appointments-icon.png";
 import affordableIcon from "./images/affordable-icon.png";
 import fastServiceIcon from "./images/fast-service-icon.png";
 import transparencyIcon from "./images/transparency-icon.png";
-
+import background from "./images/background.png";
 const items = [
   {
     icon: empoweringIcon,
@@ -45,20 +45,63 @@ const items = [
       "We believe in honesty and transparency. MZYA ensures you know exactly what to expect before making a decision.",
   },
 ];
+
 export const WhyChooseUs = () => {
   return (
-    <section className="why-choose-us">
-      <div className="container">
-        <h2 className="why-title">Why choose us?</h2>
-        <div className="why-items">
+    <section className="bg-white w-100 vh-100 d-flex justify-content-center align-items-center p-3">
+     <div 
+  className="container" 
+  style={{
+    backgroundImage: `url(${background})`,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    width: '100vw',
+    height: '82vh',
+    borderRadius: '3%' 
+  }}
+>
+<h2 
+  className="text-start text-white fw-bold "
+  style={{ 
+    fontSize: '4vh',
+    margin: '2vh 0 0 4vw' // top, right, bottom, left
+  }}
+>
+  Why choose us?
+</h2>
+        
+        <div className="row row-cols-1 row-cols-md-2 g-4 text-white">
           {items.map((item, index) => (
-            <div className="why-item" key={index}>
-              <div className="why-item-title-photo">
-                <img src={item.icon} alt={item.title} className="why-icon" />
-                <h3 className="why-item-title">{item.title}</h3>
+            <div className="col" key={index}>
+              <div className="ms-3 text-start p-2">
+                <div className="d-flex flex-wrap" style={{ gap: '5%' }}>
+                  <img 
+                    src={item.icon} 
+                    alt={item.title} 
+                    style={{ 
+                      width: '6vw', 
+                      height: '6vh',
+                      marginBottom: '2vh'
+                    }}
+                  />
+                  <h3 
+                    className="fw-bold mb-2"
+                    style={{ fontSize: '3vh' }}
+                  >
+                    {item.title}
+                  </h3>
+                </div>
+                <p 
+                  className="text-wrap pe-1" 
+                  style={{ 
+                    fontSize: '2.3vh',
+                    lineHeight: 1.6,
+                    color: '#ddd'
+                  }}
+                >
+                  {item.description}
+                </p>
               </div>
-
-              <p className="why-item-description">{item.description}</p>
             </div>
           ))}
         </div>

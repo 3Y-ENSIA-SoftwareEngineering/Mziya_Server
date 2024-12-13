@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./../CSSFiles/Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import doorRepair from "./../Components/images/door-repair.png";
-import { Navbar } from "../Components/NavBar.jsx";
+import { Navbar } from "./../Components/NavBar.jsx";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -40,7 +40,7 @@ const Login = () => {
     setServerError(null);
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
+      const response = await fetch("https://your-backend-api.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

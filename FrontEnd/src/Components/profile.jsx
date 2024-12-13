@@ -1,41 +1,78 @@
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
-import { Navbar } from "./NavBar.jsx";
-// import { supabase } from '../supabaseClient.js';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Navbar } from './NavBar.jsx';
+import "bootstrap/dist/css/bootstrap.min.css";
+
 export const Profile = () => {
-  const [formData, setFormData] = useState({
-    firstName: "John", // Set initial value for display
-    lastName: "Doe", // Set initial value for display
-    email: "john.doe@example.com", // Set initial value for display
-    location: "",
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
+  const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', location: '' });
+  const [jobDeals, setJobDeals] = useState([]);
+  const [jobOffers, setJobOffers] = useState([]);
+  const [profilePic, setProfilePic] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const [profilePic, setProfilePic] = useState("");
+  useEffect(() => {
+    fetchUserData();
+    fetchJobDeals();
+    fetchJobOffers();
+  }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleProfilePicChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setProfilePic(reader.result);
-      };
-      reader.readAsDataURL(file);
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/user');
+      setFormData(response.data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic here
-    console.log("Form submitted", formData);
+  const fetchJobDeals = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/jobDeals');
+      setJobDeals(response.data);
+    } catch (error) {
+      console.error('Error fetching job deals:', error);
+    }
   };
+
+  const fetchJobOffers = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/jobOffers');
+      setJobOffers(response.data);
+    } catch (error) {
+      console.error('Error fetching job offers:', error);
+    }
+  };
+
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5000/changePassword', { newPassword: formData.newPassword, currentPassword: formData.currentPassword });
+      alert(response.data.message);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  const handleProfilePicChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await axios.post('http://localhost:5000/uploadProfilePic', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+      setProfilePic(response.data.publicUrl);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
@@ -52,35 +89,19 @@ export const Profile = () => {
                 className="rounded-circle border"
                 style={{ width: "150px", height: "150px", objectFit: "cover" }}
               />
-              {/* File Input Label */}
-              <label
-                htmlFor="profile-pic"
-                className="position-absolute"
-                style={{
-                  bottom: "0.05vh",
-                  right: "0.03vw",
-                  color: "#fff",
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: "10vw",
-                  height: "10vh",
-                }}
-              >
-                <span role="img" aria-label="Camera">
-                  📷
-                </span>
+              <label htmlFor="profile-pic" className="position-absolute">
+                <span role="img" aria-label="Camera">📷</span>
               </label>
               <input
                 type="file"
                 id="profile-pic"
-                name="profile-pic"
+                accept="image/*"
                 className="d-none"
                 onChange={handleProfilePicChange}
               />
             </div>
+            
+            {/* User Info Display */}
             <div className="row">
               <div className="col-md-6 mb-3">
                 <label className="form-label">First Name</label>
@@ -95,138 +116,110 @@ export const Profile = () => {
                 </div>
               </div>
             </div>
-            <div className="mb-3">
-              <label className="form-label">Email</label>
-              <div className="border p-2 rounded">
-                <span>{formData.email}</span>
+
+            {/* Password Change Form */}
+            <form onSubmit={handlePasswordChange}>
+              <h4 className="text-primary mt-4">Change Password</h4>
+              <div className="mb-3">
+                <label className="form-label">Current Password</label>
+                <input
+                  type="password"
+                  name="currentPassword"
+                  value={formData.currentPassword}
+                  onChange={(e) => setFormData(prev => ({
+                    ...prev,
+                    currentPassword: e.target.value
+                  }))}
+                  className="form-control"
+                  required
+                />
               </div>
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Location</label>
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleInputChange}
-                className="form-control"
-                required
-              />
-            </div>
-            <h4 className="text-primary mt-4">Change Password</h4>
-            <div className="mb-3">
-              <label className="form-label">Current Password</label>
-              <input
-                type="password"
-                name="currentPassword"
-                value={formData.currentPassword}
-                onChange={handleInputChange}
-                className="form-control"
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">New Password</label>
-              <input
-                type="password"
-                name="newPassword"
-                value={formData.newPassword}
-                onChange={handleInputChange}
-                className="form-control"
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Confirm New Password</label>
-              <input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleInputChange}
-                className="form-control"
-                required
-              />
-            </div>
-            {/* Change Password Button */}
-            <div
-              className="d-flex justify-content-center"
-              style={{ marginTop: "2vh" }}
-            >
+              <div className="mb-3">
+    <label className="form-label">New Password</label>
+    <input
+      type="password"
+      name="newPassword"
+      value={formData.newPassword}
+      onChange={(e) => setFormData(prev => ({
+        ...prev,
+        newPassword: e.target.value
+      }))}
+      className="form-control"
+      required
+    />
+  </div>
+  <div className="mb-3">
+    <label className="form-label">Confirm New Password</label>
+    <input
+      type="password"
+      name="confirmPassword"
+      value={formData.confirmPassword}
+      onChange={(e) => setFormData(prev => ({
+        ...prev,
+        confirmPassword: e.target.value
+      }))}
+      className="form-control"
+      required
+    />
+    </div>
+              {/* New Password fields... */}
               <button
                 type="submit"
                 className="btn"
                 style={{
                   backgroundColor: "rgba(20, 34, 87, 1)",
                   color: "#fff",
-                  width: "20vw", // Adjust the width as needed
-                  padding: "1.5vh 0.5vw", // Adjust padding if needed
+                  width: "20vw",
+                  padding: "1.5vh 0.5vw",
                 }}
               >
                 Change Password
               </button>
-            </div>
+            </form>
           </div>
+
           {/* Job Info Section */}
           <div className="col-lg-6">
             <div className="mb-4">
               <h4 className="text-secondary">My Job Deals</h4>
-              <div
-                className="p-3 border rounded"
-                style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
-              >
-                <p className="text-muted text-center">No deals yet</p>
-              </div>
-              <div
-                className="p-3 border rounded"
-                style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
-              >
-                <p className="text-muted text-center">No deals yet</p>
-              </div>
-              <div
-                className="p-3 border rounded"
-                style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
-              >
-                <p className="text-muted text-center">No deals yet</p>
-              </div>
-              {/* More job deal divs here */}
+              {jobDeals.length > 0 ? (
+                jobDeals.map(deal => (
+                  <div
+                    key={deal.id}
+                    className="p-3 border rounded"
+                    style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
+                  >
+                    <p>Category: {deal.jobs.job_category}</p>
+                    <p>Description: {deal.jobs.description}</p>
+                    <p>Status: {deal.status}</p>
+                  </div>
+                ))
+              ) : (
+                <div className="p-3 border rounded" style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}>
+                  <p className="text-muted text-center">No deals yet</p>
+                </div>
+              )}
             </div>
+
             <div>
               <h4 className="text-secondary">My Job Offers</h4>
-              <div
-                className="p-3 border rounded"
-                style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
-              >
-                <p className="text-muted text-center">No offers yet</p>
-              </div>
-              <div
-                className="p-3 border rounded"
-                style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
-              >
-                <p className="text-muted text-center">No offers yet</p>
-              </div>
-              <div
-                className="p-3 border rounded"
-                style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
-              >
-                <p className="text-muted text-center">No offers yet</p>
-              </div>
-              {/* More job offer divs here */}
-            </div>
-            <div
-              className="d-flex justify-content-center"
-              style={{ marginTop: "2vh" }}
-            >
-              <button
-                type="submit"
-                className="btn"
-                style={{
-                  backgroundColor: "rgba(20, 34, 87, 1)",
-                  color: "#fff",
-                  width: "20vw", // Adjust the width as needed
-                  padding: "1.5vh 0.5vw", // Adjust padding if needed
-                }}
-              >
-                Post Job
-              </button>
+              {jobOffers.length > 0 ? (
+                jobOffers.map(offer => (
+                  <div
+                    key={offer.id}
+                    className="p-3 border rounded"
+                    style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
+                  >
+                    <p>Category: {offer.job_category}</p>
+                    <p>Description: {offer.description}</p>
+                    <p>Status: {offer.status}</p>
+                  </div>
+                ))
+              ) : (
+                <div className="p-3 border rounded" style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}>
+                  <p className="text-muted text-center">No offers yet</p>
+                </div>
+              )}
             </div>
           </div>
         </div>
