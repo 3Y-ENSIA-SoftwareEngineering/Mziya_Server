@@ -1,0 +1,68 @@
+.service-container {
+    background-color: white;
+    padding: 40px ;
+    text-align: center;
+    min-width: 100%;
+  }
+  
+  .service-title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 40px;
+  }
+  
+  .service-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 40px;
+  }
+  
+  .service-item {
+    background-color: rgba(21, 178, 245, 1);
+    border-radius: 50px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    width: 450px; /* Added fixed width */
+    height: 250px; /* Added fixed height */
+    text-align: left;
+    margin-left: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  }
+  .service-item:hover {
+    transform: translateY(-10px); /* Moves item up slightly */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Larger shadow on hover */
+  }
+  
+  .service-item2 {
+    background-color: rgba(21, 178, 245, 1);
+    border-radius: 50px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    width: 450px; /* Added fixed width */
+    height: 250px; /* Added fixed height */
+    text-align: left;
+    margin-left: 150px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+  }
+  .service-item2:hover {
+    transform: translateY(-10px); /* Moves item up slightly */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Larger shadow on hover */
+  }
+  .service-item-title {
+    color: #f5f5f5;;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .service-item-description {
+    font-size: 18px;
+    color: black;
+    line-height: 1.5;
+  }
+  
+  @media (max-width: 768px) {
+    .service-items {
+      grid-template-columns: 1fr;
+    }
+  }

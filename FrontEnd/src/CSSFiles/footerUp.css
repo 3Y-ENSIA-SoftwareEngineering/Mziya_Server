@@ -1,0 +1,71 @@
+/* General Styling */
+
+/* Container */
+.home-service-container {
+    background-color: rgba(20, 34, 87, 1);
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Header Section */
+  .header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    color: white;
+    margin-left: 10%;
+  }
+  
+  .text-container h1 {
+    font-size: 36px;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  .text-container h2 {
+    font-size: 28px;
+    font-weight: 400;
+    margin: 10px 0;
+  }
+  
+  .features-list {
+    display: flex;
+    gap: 20px; /* Adjust spacing between the items */
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    color: rgba(21, 178, 245, 1);
+  }
+  
+  .features-list li {
+    font-size: 18px;
+    margin: 0; /* Remove default margin for list items */
+    display: flex;
+    align-items: center; /* Vertically align the text */
+  }
+  
+  .get-started-button {
+    background-color: #0099ff;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .get-started-button:hover {
+    background-color: rgba(21, 178, 245, 1);
+  }
+  
+  .image-container {
+    max-width: 50%;
+  }
+  
+  .person-image {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+  
