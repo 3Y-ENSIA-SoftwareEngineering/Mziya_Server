@@ -11,8 +11,9 @@ import { HowItWorks } from './Components/HowItWorks.jsx';
 import { ContactUs } from './Components/ContactUs.jsx';
 import { FooterUp } from './Components/FooterUp.jsx';
 import { FooterDown } from './Components/FooterDown.jsx';
-import {PostingPage} from './Components/PostingPage.jsx';
-import {Profile} from './Components/profile.jsx';
+import { PostingPage } from './Components/PostingPage.jsx';
+import { Profile } from './Components/profile.jsx';
+import { CheckEmail } from './screens/check_email.jsx';
 
 function App() {
   return (
@@ -34,7 +35,7 @@ function App() {
                 <HowItWorks />
                 <ContactUs />
                 <FooterUp />
-                < FooterDown/>
+                <FooterDown/>
               </>
             }
           />
@@ -44,6 +45,7 @@ function App() {
           <Route path="/makepost" element={<PostingPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<ContactUs />} />
+          <Route path="/check_email" element={<CheckEmail />} />
         </Routes>
       </div>
     </Router>

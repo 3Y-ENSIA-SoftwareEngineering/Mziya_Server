@@ -1,5 +1,5 @@
 
-const nodemailer = require('nodemailer');
+/*const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 class EmailService {
@@ -14,7 +14,7 @@ class EmailService {
       }
     });
   }
-
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
   async sendVerificationEmail(email, token) {
     const verificationLink = `${process.env.FRONTEND_URL}/verify/${token}`;
 
@@ -49,3 +49,4 @@ class EmailService {
 module.exports = new EmailService();
 
 
+*/
