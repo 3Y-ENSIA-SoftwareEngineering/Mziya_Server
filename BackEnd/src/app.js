@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import authRoutes from './routes/authRoutes.js';
+//import authRoutes from './routes/authRoutes.js';
 import jobRoutes from './routes/jobRoutes.js';
 import dotenv from 'dotenv';
 
@@ -13,7 +13,7 @@ app.use(cors({ origin: 'http://localhost:3001' })); // !! the port should be cha
 app.use(express.json());
 
 // Routes
-app.use('/api/auth', authRoutes);
+//app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
 // Error handling middleware
 app.use((err, req, res, next) => {

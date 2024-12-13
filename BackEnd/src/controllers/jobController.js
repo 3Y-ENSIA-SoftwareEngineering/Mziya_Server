@@ -21,7 +21,6 @@ class JobController {
         age_matters,
         age_min,
         age_max,
-        gender_matters,
         required_gender,
         additional_details,
         created_at,
@@ -35,7 +34,7 @@ class JobController {
       if (!description) validationErrors.push('description is required');
       if (!location) validationErrors.push('location is required');
       if (!job_type) validationErrors.push('job_type is required');
-      if (!job_category) validationErrors.push('job_category is required');
+      if (!job_category || job_category.length === 0) validationErrors.push('job_category is required');
       if (budget === undefined || budget === null) validationErrors.push('budget is required');
       if (!status) validationErrors.push('status is required');
       if (!availability_type) validationErrors.push('availability_type is required');
@@ -67,7 +66,6 @@ class JobController {
         age_matters,
         age_min,
         age_max,
-        gender_matters,
         required_gender,
         additional_details,
         created_at: new Date().toISOString(),

@@ -2,21 +2,21 @@
 import { body, validationResult } from 'express-validator';
 
 const jobTypeOptions = ['small_task', 'large_task', 'part_time', 'full_time'];
-const jobCategoryOptions = ['Plumbing', 'Electrical', 'Carpentry', 'Cleaning', 'Gardening', 'Babysitting'];
+const jobCategoryOptions = ['Babysitting', 'Child Care', 'Plumbing', 'Gardening', 'Painting', 'Electrical', 'Cleaning', 'Private Tutor'];
 const jobStatusOptions = ['pending', 'in_progress', 'completed', 'cancelled']; 
 const availabilityTypeOptions = ['open', 'closed'];
 const requiredGenderOptions = ['any', 'male', 'female'];
 
 const validateJobInput = [
 
-  // *** home_owner_id ***
-  // cannot be null. in the db, i suggest set it as unique
-  // has to be positive int
-  // in fact, it is added automatically in an incremental way so idk if this is necessary
-  body('home_owner_id')
-    .exists({checkNull: true, checkFalsy: true}) // check its not null and not falsy (0, '', undefined)
-    .isInt({min: 1})
-    .withMessage('Home owner ID is required and must be positive integer'),
+  // // *** home_owner_id ***
+  // // cannot be null. in the db, i suggest set it as unique
+  // // has to be positive int
+  // // in fact, it is added automatically in an incremental way so idk if this is necessary
+  // body('home_owner_id')
+  //   .exists({checkNull: true, checkFalsy: true}) // check its not null and not falsy (0, '', undefined)
+  //   .isInt({min: 1})
+  //   .withMessage('Home owner ID is required and must be positive integer'),
 
 
   // *** description ***
@@ -28,18 +28,19 @@ const validateJobInput = [
 
 
   // *** location ***
-  // according to the db, it can be null
-  // postgers recommends to use text instead of varchar
+  // according to the db, it can NOT be null
   body('location')
+    .exists({checkNull: true, checkFalsy: true})
     .trim()
     .isLength({min: 2, max: 100})
     .withMessage('Location must be between 2 and 100 characters'),
 
 
   // *** job type ***
-  // according to the db, it can be null
+  // according to the db, it can NOT be null
   // type enum
   body('job_type')
+    .exists({checkNull: true, checkFalsy: true})
     .isIn(jobTypeOptions)
     .withMessage(`Job type must be one of: ${jobTypeOptions.join(', ')}`),
 
@@ -109,18 +110,21 @@ const validateJobInput = [
     .isBoolean()
     .withMessage('age_matters must be a boolean'),
 
-  body('age_min')
-    .optional({ checkFalsy: true })
+    body('age_min')
+    .optional({ nullable: true }) // explicitly allow null
+    .if(body('age_min').exists({ checkNull: false })) // only validate if a value exists
     .isInt({ min: 18, max: 75 })
-    .withMessage('Minimum age must be between 18 and 75'),
+    .withMessage('Minimum age must be at least 18'),
 
-  body('age_max')
-    .optional({ checkFalsy: true })
+body('age_max')
+    .optional({ nullable: true }) // explicitly allow null
+    .if(body('age_max').exists({ checkNull: false })) // only validate if a value exists
     .isInt({ min: 18, max: 75 })
-    .withMessage('Maximum age must be between 18 and 75')
+    .withMessage('Maximum age must be at most 75')
     .custom((value, { req }) => {
-      if (req.body.age_min && value) { // both min and max are provided
-        if (parseInt(value) <= parseInt(req.body.age_min)) { // ensure min is less then max
+      // Only run this check if both values are non-null
+      if (req.body.age_min != null && value != null) {
+        if (parseInt(value) <= parseInt(req.body.age_min)) {
           throw new Error('Maximum age must be greater than minimum age');
         }
       }
@@ -129,15 +133,10 @@ const validateJobInput = [
 
 
   // *** gender-related validation
-  // according to the db, they can be null (optional)
-
-  // !! it does not make sense to have a bool gender matters then having any option in gender options
-
-  body('gender_matters')
-    .isBoolean()
-    .withMessage('gender_matters must be a boolean'),
+  // according to the db, they can NOT be null (optional)
 
   body('required_gender')
+    .exists({checkNull: true, checkFalsy: true})
     .isIn(requiredGenderOptions)
     .withMessage(`Required gender must be one of: ${requiredGenderOptions.join(', ')}`),
 
