@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navbar } from "./../Components/NavBar";
+import { Navbar } from "../Components/NavBar.jsx";
 import JobCard from "./../Components/JobCard";
 import { Footer } from "./../Components/Footer.jsx";
 import "./../CSSFiles/footer.css";
