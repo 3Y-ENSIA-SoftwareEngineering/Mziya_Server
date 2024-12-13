@@ -1,36 +1,38 @@
-// src/middleware/authMiddleware.js
-const jwt = require('jsonwebtoken');
-const supabase = require('../config/database');
+import jwt from 'jsonwebtoken';
+import supabase from '../config/database.js';
+import UnauthenticatedError from '../Errors/UnauthenticatedError.js';
 
-const authMiddleware = async (req, res, next) => {
-  // Get token from header
-  const token = req.header('Authorization')?.replace('Bearer ', '');
+const authenticateUser = async (req, res, next) => {
+  const authHeader = req.headers.authorization;
 
-  if (!token) {
-    return res.status(401).json({ message: 'No token, authorization denied' });
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    throw new UnauthenticatedError('Authentication invalid');
   }
 
-  try {
-    // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const token = authHeader.split(' ')[1];
 
-    // Check if user still exists in Supabase
-    const { data, error } = await supabase
-      .from('users')
-      .select('*')
-      .eq('id', decoded.id)
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Fetch the user from Supabase
+    const { data: user, error } = await supabase
+      .from('Users')
+      .select('id')
+      .eq('id', payload.user_id)
       .single();
 
-    if (error || !data) {
-      return res.status(401).json({ message: 'Token is not valid' });
+    if (error || !user) {
+      throw new UnauthenticatedError('Authentication invalid');
     }
 
-    // Attach user to request object
-    req.user = data;
+    // Attach the user to the request object
+    req.user = { id: user.user_id };
+
     next();
-  } catch (err) {
-    res.status(401).json({ message: 'Token is not valid' });
+  } catch (error) {
+    console.error('Authentication error:', error);
+    throw new UnauthenticatedError('Authentication invalid');
   }
 };
 
-module.exports = authMiddleware;
+export default authenticateUser;
