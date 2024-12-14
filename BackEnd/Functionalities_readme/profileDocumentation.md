@@ -54,7 +54,7 @@
    ```bash
    node ProfileServer.js
    ```
-2. The server will start at `http://localhost:5000`.
+2. The server will start at `http://localhost:3000`.
 
 ---
 

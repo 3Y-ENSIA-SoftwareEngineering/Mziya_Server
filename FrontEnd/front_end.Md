@@ -228,7 +228,7 @@ Asynchronous Process:
 Fetches job data from the backend API when the component is mounted.
 
 - **Logic**:
-  - Makes an asynchronous request to the backend (<https://your-backend-api.com/jobs>) to fetch a list of jobs.
+  - Makes an asynchronous request to the backend (<https://your-backend-api.com/getJob>) to fetch a list of jobs.
   - If the request is successful, updates the jobs state with the fetched data.
   - If the request fails, logs an error message in the console.
 - **State Updated**:
