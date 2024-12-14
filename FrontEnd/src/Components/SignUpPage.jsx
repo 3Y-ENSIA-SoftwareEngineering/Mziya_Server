@@ -6,7 +6,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import doorRepair from "./images/door-repair.png";
-import { Navbar } from "./NavBar.jsx";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 export function SignUp() {
@@ -146,7 +145,6 @@ export function SignUp() {
 
   return (
     <div>
-      <Navbar />
       <div
         className="container-fluid vh-100 d-flex align-items-center justify-content-center"
         style={{ backgroundColor: "white" }}

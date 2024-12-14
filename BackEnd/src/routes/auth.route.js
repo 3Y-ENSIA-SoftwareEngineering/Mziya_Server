@@ -14,9 +14,9 @@ import {
  // validateVerifyOTP, 
   validateForgotPassword, 
   validateResetPassword 
-} from '../middleware/validationMiddleware.js';
+} from '../middleware/validateInput.js';
 
-import authenticateUser from '../middleware/authMiddleware.js';
+//import authenticateUser from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 

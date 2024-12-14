@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navbar } from "./NavBar";
+import { Navbar } from './navBar.jsx';
 
 function Modal({ message, type, onClose }) {
   return (
@@ -68,7 +68,7 @@ export function ContactUs() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    fetch("http://localhost:5000/send-message", {
+    fetch("http://localhost:3000/api/contact", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

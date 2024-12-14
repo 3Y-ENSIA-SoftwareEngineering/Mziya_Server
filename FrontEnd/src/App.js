@@ -1,4 +1,4 @@
-import './App.css';
+import './CSSFiles/App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './screens/Login.jsx';
 import { SignUp } from './Components/SignUpPage.jsx';
@@ -12,8 +12,9 @@ import { ContactUs } from './Components/ContactUs.jsx';
 import { FooterUp } from './Components/FooterUp.jsx';
 import { FooterDown } from './Components/FooterDown.jsx';
 import { PostingPage } from './Components/PostingPage.jsx';
-import { Profile } from './Components/profile.jsx';
+import { Profile } from './screens/profile.jsx';
 import { CheckEmail } from './screens/check_email.jsx';
+import { Dashboard} from './screens/dashboard.jsx';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/check_email" element={<CheckEmail />} />
+          <Route path="/dashboard" element={< Dashboard />} />
         </Routes>
       </div>
     </Router>

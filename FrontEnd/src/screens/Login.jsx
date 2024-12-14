@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./../CSSFiles/Login.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import doorRepair from "./../Components/images/door-repair.png";
-import { Navbar } from "../Components/NavBar.jsx";
+
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -86,7 +86,6 @@ const Login = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="login-page">
         <img
           src={doorRepair}

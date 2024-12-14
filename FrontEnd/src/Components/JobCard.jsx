@@ -6,18 +6,20 @@ const JobCard = ({ job }) => {
       <div className="HOwnerInfo d-flex flex-column align-items-end pe-4 ps-4">
         <h6 className="text-primary fw-bold">{job.name}</h6>
         <p className="text-secondary small">{job.location}</p>
-        <p className="text-secondary small">{job.price} DA/h</p>
+        <p className="text-secondary small">{job.budget} DA/h</p>
         <h6 className="text-primary fw-bold">{job.contact}</h6>
       </div>
       <div className="line bg-secondary mx-3"></div>
       <div className="JobInfo d-flex flex-column align-items-start ps-3 flex-grow-1">
         <div className="d-flex flex-row justify-content-between w-100">
           <div className="tags mb-2 d-flex flex-row justify-content-start">
-            {job.category.split(", ").map((tag, index) => (
-              <span key={index} className="badge bg-info text-white me-2">
-                {tag}
-              </span>
-            ))}
+            {job.job_category
+              ? job.job_category.split(", ").map((tag, index) => (
+                  <span key={index} className="badge bg-info text-white me-2">
+                    {tag}
+                  </span>
+                ))
+              : <span className="text-muted small">No categories</span>}
           </div>
           <p className="text-muted small ps-2 mb-0">{job.time} ago</p>
         </div>
@@ -44,5 +46,6 @@ const JobCard = ({ job }) => {
     </div>
   );
 };
+
 
 export default JobCard;
