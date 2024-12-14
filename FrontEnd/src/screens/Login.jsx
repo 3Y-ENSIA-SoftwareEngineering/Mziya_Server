@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./../CSSFiles/Login.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import doorRepair from "./../Components/images/door-repair.png";
 import { Navbar } from "../Components/NavBar.jsx";
 
@@ -9,7 +9,24 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [serverError, setServerError] = useState(null);
+  const [verificationMessage, setVerificationMessage] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Parse query parameters
+    const queryParams = new URLSearchParams(location.search);
+    const verified = queryParams.get("verified");
+    const reason = queryParams.get("reason");
+
+    if (verified === "true") {
+      setVerificationMessage("Your email has been successfully verified. Please log in.");
+    } else if (reason === "expired") {
+      setVerificationMessage("Your verification link has expired. Please request a new one.");
+    } else if (reason === "error") {
+      setVerificationMessage("There was an error verifying your email. Please try again.");
+    }
+  }, [location.search]);
 
   const validate = () => {
     let tempErrors = {};
@@ -40,7 +57,7 @@ const Login = () => {
     setServerError(null);
 
     try {
-      const response = await fetch("https://your-backend-api.com/login", {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,6 +96,10 @@ const Login = () => {
         />
         <div className="login-container">
           <h2>Hi Again!</h2>
+
+          {/* Display verification message */}
+          {verificationMessage && <p className="success">{verificationMessage}</p>}
+
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="email">Email</label>

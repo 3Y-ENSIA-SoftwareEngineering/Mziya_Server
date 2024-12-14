@@ -159,7 +159,6 @@ const login = async (req, res) => {
     }
 };
 
-// Verify User Email Controller
 const verifyUserEmail = async (req, res) => {
     try {
         const token = req.params.token;
@@ -179,27 +178,20 @@ const verifyUserEmail = async (req, res) => {
             });
         }
 
+        // Generate a new token if needed
         const realToken = jwt.sign({ user_id }, process.env.JWT_SECRET, { expiresIn: '10d' });
 
-        return res.status(StatusCodes.OK).json({
-            success: true,
-            message: 'User verified successfully.',
-            token: realToken,
-        });
+        // Redirect the user to the login page
+        return res.redirect(`http://localhost:3001/login?verified=true`);
     } catch (e) {
         if (e.name === 'TokenExpiredError') {
-            return res.status(StatusCodes.UNAUTHORIZED).json({
-                success: false,
-                message: 'Token has expired',
-            });
+            return res.redirect(`http://localhost:3001/login?verified=false&reason=expired`);
         }
 
-        return res.status(StatusCodes.BAD_REQUEST).json({
-            success: false,
-            message: 'Error verifying email',
-        });
+        return res.redirect(`http://localhost:3001/login?verified=false&reason=error`);
     }
 };
+
 
 
 // Forgot Password Controller
