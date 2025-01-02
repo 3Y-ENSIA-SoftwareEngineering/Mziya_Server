@@ -33,7 +33,7 @@ function Modal({ message, type, onClose }) {
   );
 }
 
-export function ContactUs() {
+export function ContactUsHomePage() {
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -98,7 +98,6 @@ export function ContactUs() {
 
   return (
     <div>
-      <Navbar />
       <div
         className="container-fluid vh-100 d-flex align-items-center"
         style={{ backgroundColor: "#ffffff" }}

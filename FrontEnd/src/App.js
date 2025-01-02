@@ -9,6 +9,7 @@ import { Service } from './Components/Service.jsx';
 import { WhyChooseUs } from './Components/whychooseus.jsx';
 import { HowItWorks } from './Components/HowItWorks.jsx';
 import { ContactUs } from './Components/ContactUs.jsx';
+import { ContactUsHomePage } from './Components/ContactUsHomePage.jsx';
 import { FooterUp } from './Components/FooterUp.jsx';
 import { FooterDown } from './Components/FooterDown.jsx';
 import { PostingPage } from './Components/PostingPage.jsx';
@@ -34,7 +35,7 @@ function App() {
                 <Service />
                 <WhyChooseUs />
                 <HowItWorks />
-                <ContactUs />
+                <ContactUsHomePage />
                 <FooterUp />
                 <FooterDown/>
               </>

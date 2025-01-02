@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaMoneyBillWave } from "react-icons/fa"; // Money icon
 import { Alert, Spinner } from "react-bootstrap";
-import { Navbar } from "./navBar.jsx";
+import { Navbar } from "./NavBar";
 
 export class PostingPage extends Component {
   constructor(props) {
@@ -156,7 +156,7 @@ export class PostingPage extends Component {
       age_matters: this.state.age_matters,
       age_min: this.state.age_matters ? parseInt(this.state.age_min) : null,
       // age_max: this.state.age_matters ? parseInt(this.state.age_max) : null,
-      age_max : null,
+      age_max: null,
       required_gender: this.state.required_gender,
       additional_details: this.state.additional_details,
     };
@@ -172,14 +172,14 @@ export class PostingPage extends Component {
         },
         body: JSON.stringify(jobData),
       });
-    
+
       if (!response.ok) {
         // Handle non-200 responses
         const errorData = await response.json();
         console.error("Error response received:", errorData); // Debugging: Log the error response
         throw new Error(errorData.message || "Job creation failed");
       }
-    
+
       const responseData = await response.json();
       console.log("Job created successfully:", responseData); // Debugging: Log the successful response
       // Success handling
@@ -196,7 +196,6 @@ export class PostingPage extends Component {
         validated: true,
       });
     }
-    
   };
 
   toggleCategory = (category) => {
@@ -247,13 +246,11 @@ export class PostingPage extends Component {
       "Private Tutor",
     ];
 
-    //start of the html part 
-
+    //start of the html part
 
     return (
-      
       <Container fluid className="mt-0 p-0">
-        <Navbar/>
+        <Navbar />
         {/* Submission Error Alert */}
         {submissionError && (
           <Alert variant="danger" className="mb-4">
@@ -267,12 +264,14 @@ export class PostingPage extends Component {
             Job created successfully!
           </Alert>
         )}
-      
+
         <Row className="p-4">
           <Col md={6}>
-            <h3 className="mb-4" style={{color:"#52afef"}}>Job Information</h3>
+            <h3 className="mb-4" style={{ color: "#52afef" }}>
+              Job Information
+            </h3>
             <Form noValidate validated={validated} onSubmit={this.handleSubmit}>
-              <Form.Group className="mb-3" >
+              <Form.Group className="mb-3">
                 <InputGroup hasValidation>
                   <InputGroup.Text>📍</InputGroup.Text>
                   <Form.Control
@@ -284,9 +283,9 @@ export class PostingPage extends Component {
                     }
                     required
                     style={{
-                      borderColor: '#D9D9D9', // Border color
-                      color: '#black',       // Text color
-                      backgroundColor: '#00000', // Background color (optional)
+                      borderColor: "#D9D9D9", // Border color
+                      color: "#black", // Text color
+                      backgroundColor: "#00000", // Background color (optional)
                     }}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -316,7 +315,6 @@ export class PostingPage extends Component {
                         }
                         checked={availability_type === "open"}
                         required
-                        
                       />
                       <Form.Check
                         type="radio"
@@ -334,14 +332,6 @@ export class PostingPage extends Component {
                 </Col>
               </Row>
 
-
-
-
-
-
-
-
-
               {/* Date and Time Inputs */}
               {availability_type && (
                 <Row className="mb-3">
@@ -356,18 +346,16 @@ export class PostingPage extends Component {
                         placeholderText="Select a starting  date"
                         required
                         style={{
-                          backgroundColor: '#D9D9D9', // Change to your desired color
-                          borderColor: '#007bff',     // Optional: Change the border color
-                          color: 'black',              // Optional: Text color for better readability
+                          backgroundColor: "#D9D9D9", // Change to your desired color
+                          borderColor: "#007bff", // Optional: Change the border color
+                          color: "black", // Optional: Text color for better readability
                         }}
-                        
                       />
                       {validated && !start_date && (
                         <div className="invalid-feedback d-block">
                           Please select a starting date.
                         </div>
                       )}
-                      
                     </Form.Group>
                   </Col>
 
@@ -460,9 +448,9 @@ export class PostingPage extends Component {
                     }
                     required
                     style={{
-                      borderColor: '#D9D9D9', // Border color
-                      color: 'black',       // Text color
-                      backgroundColor: '#D9D9D9', // Background color (optional)
+                      borderColor: "#D9D9D9", // Border color
+                      color: "black", // Text color
+                      backgroundColor: "#D9D9D9", // Background color (optional)
                     }}
                   >
                     <option value="">Select a Category</option>
@@ -492,9 +480,9 @@ export class PostingPage extends Component {
                     step="0.01"
                     required
                     style={{
-                      borderColor: '#D9D9D9', // Border color
-                      color: 'black',       // Text color
-                      backgroundColor: '#00000', // Background color (optional)
+                      borderColor: "#D9D9D9", // Border color
+                      color: "black", // Text color
+                      backgroundColor: "#00000", // Background color (optional)
                     }}
                   />
                   <InputGroup.Text>
@@ -513,9 +501,9 @@ export class PostingPage extends Component {
                   onChange={(e) => this.setState({ job_type: e.target.value })}
                   required
                   style={{
-                    borderColor: '#D9D9D9', // Border color
-                    color: 'black',       // Text color
-                    backgroundColor: '#00000', // Background color (optional)
+                    borderColor: "#D9D9D9", // Border color
+                    color: "black", // Text color
+                    backgroundColor: "#00000", // Background color (optional)
                   }}
                 >
                   <option value="" disabled>
@@ -551,9 +539,9 @@ export class PostingPage extends Component {
                     this.setState({ description: e.target.value })
                   }
                   style={{
-                    borderColor: '#D9D9D9', // Border color
-                    color: 'black',       // Text color
-                    backgroundColor: '#D9D9D9', // Background color (optional)
+                    borderColor: "#D9D9D9", // Border color
+                    color: "black", // Text color
+                    backgroundColor: "#D9D9D9", // Background color (optional)
                   }}
                 />
               </Form.Group>
@@ -568,7 +556,9 @@ export class PostingPage extends Component {
             <Form.Group className="mb-0">
               {/* Existing worker information form groups */}
 
-              <h3 className="mb-4" style={{color:"#52afef"}}>Worker Information</h3>
+              <h3 className="mb-4" style={{ color: "#52afef" }}>
+                Worker Information
+              </h3>
               {/* Age Selection */}
               <div className="mb-3 d-flex align-items-center gap-3">
                 <Form.Label
@@ -686,21 +676,21 @@ export class PostingPage extends Component {
                     this.setState({ additional_details: e.target.value })
                   }
                   style={{
-                    borderColor: '#D9D9D9', // Border color
-                    color: 'black',       // Text color
-                    backgroundColor: '#D9D9D9', // Background color (optional)
+                    borderColor: "#D9D9D9", // Border color
+                    color: "black", // Text color
+                    backgroundColor: "#D9D9D9", // Background color (optional)
                   }}
                 />
               </Form.Group>
 
               {/* Submit Button with Loading State */}
-              <div className="mt-4" style={{textAlign:"center"}}>
+              <div className="mt-4" style={{ textAlign: "center" }}>
                 <Button
                   type="submit"
                   style={{
                     backgroundColor: "#172254", // Custom green color
                     color: "white",
-                    border: "none"
+                    border: "none",
                   }}
                   onClick={this.handleSubmit}
                   disabled={isSubmitting}

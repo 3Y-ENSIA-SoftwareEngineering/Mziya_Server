@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Navbar } from "../Components/navBar.jsx";
+import { Navbar } from "./../Components/NavBar.jsx";
 import JobCard from "./../Components/JobCard";
 import { Footer } from "./../Components/Footer.jsx";
 import "./../CSSFiles/footer.css";
@@ -18,7 +18,7 @@ const FindJob = () => {
 
     try {
       let endpoint = "http://localhost:3000/api/getJob/";
-      
+
       // Modify endpoint based on selected option
       switch (option) {
         case "Category":
@@ -44,7 +44,7 @@ const FindJob = () => {
       if (!response.ok) {
         throw new Error("Failed to fetch jobs");
       }
-      
+
       const responseData = await response.json();
       setJobs(responseData.data || []); // Use .data from the response
     } catch (error) {
@@ -81,160 +81,159 @@ const FindJob = () => {
 
   return (
     <div>
-  <Navbar />
-  <div
-    style={{
-      minHeight: "100vh",
-      display: "flex",
-      flexDirection: "column",
-    }}
-  >
-    <div
-      style={{
-        flex: 1,
-        padding: "20px",
-      }}
-    >
-      <div className="d-flex flex-row justify-content-end mb-4">
+      <Navbar />
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <div
-          className="d-flex flex-row justify-content-start col-md-7 rounded-pill"
           style={{
-            marginLeft: "auto",
-            marginRight: "20px",
-            width: "70%",
+            flex: 1,
+            padding: "20px",
           }}
         >
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search for a job..."
-          />
-        </div>
-      </div>
-      {/* Content Section */}
-      <div className="d-flex flex-row" style={{ marginTop: "20px" }}>
-        {/* Sidebar */}
-        <div
-          className="d-flex flex-column"
-          style={{
-            width: "30%",
-            marginLeft: "10vw",
-            marginRight: "20px",
-          }}
-        >
-          <div className="options d-flex flex-column align-items-start mt-5">
-            <h5 className="mb-2">Sort by:</h5>
-            <ul
-              className="list-unstyled"
+          <div className="d-flex flex-row justify-content-end mb-4">
+            <div
+              className="d-flex flex-row justify-content-start col-md-7 rounded-pill"
               style={{
-                listStyle: "none",
-                padding: 0,
+                marginLeft: "auto",
+                marginRight: "20px",
+                width: "70%",
               }}
             >
-              {/** Reusable button styles */}
-              {(() => {
-                const buttonStyle = {
-                  cursor: "pointer",
-                  padding: "10px",
-                  borderRadius: "8px",
-                  marginBottom: "10px",
-                  backgroundColor: "#f9f9f9",
-                  transition: "all 0.3s ease",
-                };
-
-                const activeButtonStyle = {
-                  ...buttonStyle,
-                  backgroundColor: "#e9ecef",
-                };
-
-                return (
-                  <>
-                    <li>
-                      <select
-                        className="form-select"
-                        style={
-                          selectedOption === "Category"
-                            ? activeButtonStyle
-                            : buttonStyle
-                        }
-                        value={selectedCategory || ""}
-                        onChange={handleCategoryChange}
-                      >
-                        <option value="" disabled>
-                          Select Category
-                        </option>
-                        <option value="Babysitting">Babysitting</option>
-                        <option value="Child Care">Child Care</option>
-                        <option value="Plumbing">Plumbing</option>
-                        <option value="Gardening">Gardening</option>
-                        <option value="Painting">Painting</option>
-                        <option value="Electrical">Electrical</option>
-                        <option value="Cleaning">Cleaning</option>
-                        <option value="Private Tutor">Private Tutor</option>
-                      </select>
-                    </li>
-                    <li
-                      className="mb-1"
-                      style={
-                        selectedOption === "Closest Jobs"
-                          ? activeButtonStyle
-                          : buttonStyle
-                      }
-                      onClick={() => handleSelect("Closest Jobs")}
-                    >
-                      Closest Jobs
-                    </li>
-                    <li
-                      className="mb-1"
-                      style={
-                        selectedOption === "Best Price"
-                          ? activeButtonStyle
-                          : buttonStyle
-                      }
-                      onClick={() => handleSelect("Best Price")}
-                    >
-                      Best Price
-                    </li>
-                    <li
-                      className="mb-1"
-                      style={
-                        selectedOption === "Best Rating"
-                          ? activeButtonStyle
-                          : buttonStyle
-                      }
-                      onClick={() => handleSelect("Best Rating")}
-                    >
-                      Best Rating
-                    </li>
-                  </>
-                );
-              })()}
-            </ul>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search for a job..."
+              />
+            </div>
           </div>
-        </div>
-        {/* Job List */}
-        <div style={{ flexGrow: 1, height: "80vh", paddingBottom: "5vh" }}>
-          <div className="row">
-            {isLoading ? (
-              <p>Loading jobs...</p>
-            ) : error ? (
-              <p>Error: {error}</p>
-            ) : jobs.length > 0 ? (
-              jobs.map((job) => (
-                <div key={job.id} className="col-12 mb-4">
-                  <JobCard job={job} />
-                </div>
-              ))
-            ) : (
-              <p>No jobs found.</p>
-            )}
+          {/* Content Section */}
+          <div className="d-flex flex-row" style={{ marginTop: "20px" }}>
+            {/* Sidebar */}
+            <div
+              className="d-flex flex-column"
+              style={{
+                width: "30%",
+                marginLeft: "10vw",
+                marginRight: "20px",
+              }}
+            >
+              <div className="options d-flex flex-column align-items-start mt-5">
+                <h5 className="mb-2">Sort by:</h5>
+                <ul
+                  className="list-unstyled"
+                  style={{
+                    listStyle: "none",
+                    padding: 0,
+                  }}
+                >
+                  {/** Reusable button styles */}
+                  {(() => {
+                    const buttonStyle = {
+                      cursor: "pointer",
+                      padding: "10px",
+                      borderRadius: "8px",
+                      marginBottom: "10px",
+                      backgroundColor: "#f9f9f9",
+                      transition: "all 0.3s ease",
+                    };
+
+                    const activeButtonStyle = {
+                      ...buttonStyle,
+                      backgroundColor: "#e9ecef",
+                    };
+
+                    return (
+                      <>
+                        <li>
+                          <select
+                            className="form-select"
+                            style={
+                              selectedOption === "Category"
+                                ? activeButtonStyle
+                                : buttonStyle
+                            }
+                            value={selectedCategory || ""}
+                            onChange={handleCategoryChange}
+                          >
+                            <option value="" disabled>
+                              Select Category
+                            </option>
+                            <option value="Babysitting">Babysitting</option>
+                            <option value="Child Care">Child Care</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Gardening">Gardening</option>
+                            <option value="Painting">Painting</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Cleaning">Cleaning</option>
+                            <option value="Private Tutor">Private Tutor</option>
+                          </select>
+                        </li>
+                        <li
+                          className="mb-1"
+                          style={
+                            selectedOption === "Closest Jobs"
+                              ? activeButtonStyle
+                              : buttonStyle
+                          }
+                          onClick={() => handleSelect("Closest Jobs")}
+                        >
+                          Closest Jobs
+                        </li>
+                        <li
+                          className="mb-1"
+                          style={
+                            selectedOption === "Best Price"
+                              ? activeButtonStyle
+                              : buttonStyle
+                          }
+                          onClick={() => handleSelect("Best Price")}
+                        >
+                          Best Price
+                        </li>
+                        <li
+                          className="mb-1"
+                          style={
+                            selectedOption === "Best Rating"
+                              ? activeButtonStyle
+                              : buttonStyle
+                          }
+                          onClick={() => handleSelect("Best Rating")}
+                        >
+                          Best Rating
+                        </li>
+                      </>
+                    );
+                  })()}
+                </ul>
+              </div>
+            </div>
+            {/* Job List */}
+            <div style={{ flexGrow: 1, height: "80vh", paddingBottom: "5vh" }}>
+              <div className="row">
+                {isLoading ? (
+                  <p>Loading jobs...</p>
+                ) : error ? (
+                  <p>Error: {error}</p>
+                ) : jobs.length > 0 ? (
+                  jobs.map((job) => (
+                    <div key={job.id} className="col-12 mb-4">
+                      <JobCard job={job} />
+                    </div>
+                  ))
+                ) : (
+                  <p>No jobs found.</p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
-
   );
 };
 

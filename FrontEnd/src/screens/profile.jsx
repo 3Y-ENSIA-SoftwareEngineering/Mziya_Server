@@ -1,28 +1,54 @@
-import React, { useState } from 'react';
-import { Navbar } from '../Components/navBar.jsx';
+import React, { useState } from "react";
+import { Navbar } from "./../Components/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export const Profile = () => {
   const [formData, setFormData] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'johndoe@example.com',
-    location: 'New York, USA',
-    newPassword: '',
-    currentPassword: '',
-    confirmPassword: ''
+    firstName: "John",
+    lastName: "Doe",
+    email: "johndoe@example.com",
+    location: "New York, USA",
+    newPassword: "",
+    currentPassword: "",
+    confirmPassword: "",
   });
 
-  const [profilePic, setProfilePic] = useState('https://via.placeholder.com/150');
+  const [profilePic, setProfilePic] = useState(
+    "https://via.placeholder.com/150"
+  );
 
   const jobDeals = [
-    { id: 1, jobs: { job_category: 'Design', description: 'Logo Design for a startup' }, status: 'Completed' },
-    { id: 2, jobs: { job_category: 'Development', description: 'Build a React website' }, status: 'In Progress' },
+    {
+      id: 1,
+      jobs: {
+        job_category: "Design",
+        description: "Logo Design for a startup",
+      },
+      status: "Completed",
+    },
+    {
+      id: 2,
+      jobs: {
+        job_category: "Development",
+        description: "Build a React website",
+      },
+      status: "In Progress",
+    },
   ];
 
   const jobOffers = [
-    { id: 1, job_category: 'Writing', description: 'Content writing for a blog', status: 'Pending' },
-    { id: 2, job_category: 'Marketing', description: 'Social media campaign', status: 'Accepted' },
+    {
+      id: 1,
+      job_category: "Writing",
+      description: "Content writing for a blog",
+      status: "Pending",
+    },
+    {
+      id: 2,
+      job_category: "Marketing",
+      description: "Social media campaign",
+      status: "Accepted",
+    },
   ];
 
   const handlePasswordChange = (e) => {
@@ -59,7 +85,9 @@ export const Profile = () => {
                 style={{ width: "150px", height: "150px", objectFit: "cover" }}
               />
               <label htmlFor="profile-pic" className="position-absolute">
-                <span role="img" aria-label="Camera">📷</span>
+                <span role="img" aria-label="Camera">
+                  📷
+                </span>
               </label>
               <input
                 type="file"
@@ -95,10 +123,12 @@ export const Profile = () => {
                   type="password"
                   name="currentPassword"
                   value={formData.currentPassword}
-                  onChange={(e) => setFormData(prev => ({
-                    ...prev,
-                    currentPassword: e.target.value
-                  }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      currentPassword: e.target.value,
+                    }))
+                  }
                   className="form-control"
                   required
                 />
@@ -109,10 +139,12 @@ export const Profile = () => {
                   type="password"
                   name="newPassword"
                   value={formData.newPassword}
-                  onChange={(e) => setFormData(prev => ({
-                    ...prev,
-                    newPassword: e.target.value
-                  }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      newPassword: e.target.value,
+                    }))
+                  }
                   className="form-control"
                   required
                 />
@@ -123,10 +155,12 @@ export const Profile = () => {
                   type="password"
                   name="confirmPassword"
                   value={formData.confirmPassword}
-                  onChange={(e) => setFormData(prev => ({
-                    ...prev,
-                    confirmPassword: e.target.value
-                  }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      confirmPassword: e.target.value,
+                    }))
+                  }
                   className="form-control"
                   required
                 />
@@ -151,7 +185,7 @@ export const Profile = () => {
             <div className="mb-4">
               <h4 className="text-secondary">My Job Deals</h4>
               {jobDeals.length > 0 ? (
-                jobDeals.map(deal => (
+                jobDeals.map((deal) => (
                   <div
                     key={deal.id}
                     className="p-3 border rounded"
@@ -163,7 +197,10 @@ export const Profile = () => {
                   </div>
                 ))
               ) : (
-                <div className="p-3 border rounded" style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}>
+                <div
+                  className="p-3 border rounded"
+                  style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
+                >
                   <p className="text-muted text-center">No deals yet</p>
                 </div>
               )}
@@ -172,7 +209,7 @@ export const Profile = () => {
             <div>
               <h4 className="text-secondary">My Job Offers</h4>
               {jobOffers.length > 0 ? (
-                jobOffers.map(offer => (
+                jobOffers.map((offer) => (
                   <div
                     key={offer.id}
                     className="p-3 border rounded"
@@ -184,7 +221,10 @@ export const Profile = () => {
                   </div>
                 ))
               ) : (
-                <div className="p-3 border rounded" style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}>
+                <div
+                  className="p-3 border rounded"
+                  style={{ backgroundColor: "#e9ecef", marginTop: "2vh" }}
+                >
                   <p className="text-muted text-center">No offers yet</p>
                 </div>
               )}
