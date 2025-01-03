@@ -1,7 +1,7 @@
 import './CSSFiles/App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './screens/Login.jsx';
-import { SignUp } from './Components/SignUpPage.jsx';
+import { SignUp } from './screens/SignUpPage.jsx';
 import { FindJob } from './screens/FindJob.jsx';
 import { Header } from './Components/Header.jsx';
 import { MainContent } from './Components/MainContent.jsx';
@@ -12,7 +12,7 @@ import { ContactUs } from './Components/ContactUs.jsx';
 import { ContactUsHomePage } from './Components/ContactUsHomePage.jsx';
 import { FooterUp } from './Components/FooterUp.jsx';
 import { FooterDown } from './Components/FooterDown.jsx';
-import { PostingPage } from './Components/PostingPage.jsx';
+import { PostingPage } from './screens/PostingPage.jsx';
 import { Profile } from './screens/profile.jsx';
 import { CheckEmail } from './screens/check_email.jsx';
 import { Dashboard} from './screens/dashboard.jsx';
