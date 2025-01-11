@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import jwtDecode from "jwt-decode"; // Ensure you have this package installed
 
 const JobCard = ({ job }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [isApplying, setIsApplying] = useState(false);
+  const [submissionError, setSubmissionError] = useState(null);
 
   const handleApplyClick = () => {
     setShowPopup(true);
@@ -10,28 +12,43 @@ const JobCard = ({ job }) => {
 
   const closePopup = () => {
     setShowPopup(false);
+    setSubmissionError(null); // Clear any previous error messages
   };
 
   const confirmApply = async () => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      alert("You need to log in to apply for a job.");
-      return;
-    }
-
     setIsApplying(true);
+    setSubmissionError(null);
+
     try {
+      // Get the token from session storage
+      const token = sessionStorage.getItem("authToken");
+      if (!token) {
+        throw new Error("You must be logged in to apply for a job.");
+      }
+
+      // Decode the token to get user ID
+      let decodedToken;
+      try {
+        decodedToken = jwtDecode(token);
+      } catch (err) {
+        throw new Error("Invalid token.");
+      }
+
+      const userId = decodedToken.user_id;
+
+      // Send a request to apply for the job
       const response = await fetch(
-        `http://localhost:3000/api/applyJob/${job.id}`,
+        `http://localhost:3000/api/apply/${job.id}`,
         {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ jobId: job.id }),
+          body: JSON.stringify({ jobId: job.id, userId }),
         }
       );
+      
 
       if (!response.ok) {
         throw new Error("Failed to apply for the job.");
@@ -40,7 +57,7 @@ const JobCard = ({ job }) => {
       alert("Application successful!");
       closePopup();
     } catch (err) {
-      alert(err.message);
+      setSubmissionError(err.message);
     } finally {
       setIsApplying(false);
     }
@@ -153,6 +170,9 @@ const JobCard = ({ job }) => {
           >
             <h5 className="mb-3">Apply for {job.title}</h5>
             <p>Are you sure you want to apply for this job?</p>
+            {submissionError && (
+              <p className="text-danger small">{submissionError}</p>
+            )}
             <div className="d-flex justify-content-between mt-4">
               <button className="btn btn-secondary" onClick={closePopup}>
                 Cancel

@@ -11,7 +11,7 @@ import { FaMoneyBillWave } from "react-icons/fa"; // Money icon
 import { Alert, Spinner } from "react-bootstrap";
 import { Navbar } from "./../Components/NavBar";
 import { Navigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import jwtDecode  from "jwt-decode";
 
 export class PostingPage extends Component {
   constructor(props) {

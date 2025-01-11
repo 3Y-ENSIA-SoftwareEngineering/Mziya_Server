@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../Components/NavBar.jsx';
 import Widget from "./../Components/Widget";
 import Widget_Deal from "./../Components/Widget_Deal";
 import profileImage from '../Components/images/profile.PNG';
 import LogoutButton from '../Components/LogoutButton.jsx';
-import handleLogout from '../Components/LogoutButton.jsx';
+import jwtDecode from 'jwt-decode';
+
+
 
 export const Profile = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -19,7 +23,6 @@ export const Profile = () => {
     confirmPassword: '',
   });
 
-  // Profile picture state initialized with default image
   const [profilePic, setProfilePic] = useState(profileImage);
   const [message, setMessage] = useState(null);
   const [jobDeals, setJobDeals] = useState([]);
@@ -27,17 +30,80 @@ export const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showNotification, setShowNotification] = useState(false);
-  const [notificationType, setNotificationType] = useState(''); // 'success' or 'error'
+  const [notificationType, setNotificationType] = useState('');
 
 
+
+  const handleApplicationAction = async (offerId, workerId, action) => {
+    const token = sessionStorage.getItem('authToken');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/jobOffers/${offerId}/applications/${workerId}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ action }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update application status');
+      }
+
+      const data = await response.json();
+
+      // Update the local state to reflect the changes
+      setJobOffers(prevOffers => 
+        prevOffers.map(offer => {
+          if (offer.id === offerId) {
+            return {
+              ...offer,
+              jobApplications: offer.jobApplications.map(app => {
+                if (app.workerId === workerId) {
+                  return {
+                    ...app,
+                    status: action === 'accept' ? 'accepted' : 'declined'
+                  };
+                }
+                return app;
+              })
+            };
+          }
+          return offer;
+        })
+      );
+
+      setMessage(`Application ${action}ed successfully`);
+      setNotificationType('success');
+      setShowNotification(true);
+    } catch (err) {
+      setError(`Failed to ${action} application: ${err.message}`);
+      setNotificationType('error');
+      setShowNotification(true);
+    }
+  };
   useEffect(() => {
-    // Fetches user data from the server
     const fetchUserData = async () => {
       try {
-        const token = localStorage.getItem('authToken');
+        // Get token from session storage
+        const token = sessionStorage.getItem('authToken');
         if (!token) {
-          setError('No authentication token found. Please log in again.');
-          setLoading(false);
+          navigate('/login');
+          return;
+        }
+
+        // Decode token to get user_id
+        let decodedToken;
+        try {
+          decodedToken = jwtDecode(token);
+        } catch (err) {
+          console.error('Token decode error:', err);
+          navigate('/login');
           return;
         }
 
@@ -50,8 +116,7 @@ export const Profile = () => {
         });
 
         if (!userResponse.ok) {
-          const errorData = await userResponse.json();
-          throw new Error(errorData.message || 'Failed to fetch user data');
+          throw new Error('Failed to fetch user data');
         }
 
         const userData = await userResponse.json();
@@ -62,12 +127,19 @@ export const Profile = () => {
           email: userData.email,
           location: userData.location,
           phoneNumber: userData.phone || '',
-          profile_picture: profileImage || userData.profile_picture,
+          profile_picture: userData.profile_picture || profileImage,
         });
 
-        // Fetch related data (job deals and job offers)
-        fetchJobDeals(token);
-        fetchJobOffers(token);
+        if (userData.profile_picture) {
+          setProfilePic(userData.profile_picture);
+        }
+
+        // Fetch job deals and offers using the same token
+        await Promise.all([
+          fetchJobDeals(token),
+          fetchJobOffers(token)
+        ]);
+
       } catch (err) {
         setError(err.message);
       } finally {
@@ -75,98 +147,64 @@ export const Profile = () => {
       }
     };
 
-    // Fetches job deals from the server
-    const fetchJobDeals = async (token) => {
-      try {
-        const response = await fetch('http://localhost:3000/api/profile/jobDeals', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch job deals`);
-        }
-
-        const data = await response.json();
-        setJobDeals(data);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-
-    // Fetches job offers from the server
-    const fetchJobOffers = async (token) => {
-      try {
-        const response = await fetch('http://localhost:3000/api/profile/jobOffers', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch job offers');
-        }
-
-        const data = await response.json();
-        setJobOffers(data);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
-
     fetchUserData();
   }, []);
 
-  const handleApplicationAction = async (jobId, workerId, action) => {
-    // Handles application status updates (accept/decline)
-    const token = localStorage.getItem('authToken');
+  const fetchJobDeals = async (token) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/jobOffers`, {
-        method: 'PATCH',
+      const response = await fetch('http://localhost:3000/api/profile/jobDeals', {
+        method: 'GET',
         headers: {
-          Authorization: `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ action }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to update application status');
+        throw new Error('Failed to fetch job deals');
       }
 
-      // Update the state to reflect changes
-      const updatedOffers = jobOffers.map((offer) => {
-        if (offer.id === jobId) {
-          const updatedApplications = offer.applications.map((application) =>
-            application.workerId === workerId
-              ? { ...application, status: action === 'accept' ? 'accepted' : 'declined' }
-              : application
-          );
-          return {
-            ...offer,
-            status: action === 'accept' ? 'in progress' : offer.status,
-            applications: updatedApplications,
-          };
-        }
-        return offer;
-      });
-
-      setJobOffers(updatedOffers);
-      setMessage('Application status updated successfully!');
+      const data = await response.json();
+      setJobDeals(data);
+      console.log(data);
     } catch (err) {
-      setError(err.message);
+      console.error('Error fetching job deals:', err);
     }
   };
 
+  const fetchJobOffers = async (token) => {
+    try {
+      const response = await fetch('http://localhost:3000/api/profile/jobOffers', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch job offers');
+      }
+
+      const data = await response.json();
+      setJobOffers(data);
+    } catch (err) {
+      console.error('Error fetching job offers:', err);
+    }
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('authToken');
+    navigate('/login');
+  };
+
   const handleProfileUpdate = async () => {
-    // Updates profile information
-    const token = localStorage.getItem('authToken');
-    console.log("token inside profile ",token);
+    const token = sessionStorage.getItem('authToken');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:3000/api/profile/update', {
         method: 'PUT',
@@ -182,24 +220,34 @@ export const Profile = () => {
 
       const data = await response.json();
       if (response.ok) {
-        setNotificationType('success');
-        setShowNotification(true);
         setMessage(data.message);
+        setNotificationType('success');
       } else {
-        setNotificationType('error');
-      setShowNotification(true);
         setError(data.message);
+        setNotificationType('error');
       }
+      setShowNotification(true);
     } catch (err) {
+      setError('Error updating profile');
       setNotificationType('error');
       setShowNotification(true);
-      setError('Error updating profile');
     }
   };
 
   const handlePasswordChange = async () => {
-    // Changes the user's password
-    const token = localStorage.getItem('authToken');
+    const token = sessionStorage.getItem('authToken');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    if (formData.newPassword !== formData.confirmPassword) {
+      setError('New passwords do not match');
+      setNotificationType('error');
+      setShowNotification(true);
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:3000/api/profile/changePassword', {
         method: 'PUT',
@@ -210,38 +258,53 @@ export const Profile = () => {
         body: JSON.stringify({
           currentPassword: formData.password,
           newPassword: formData.newPassword,
-          confirmPassword: formData.confirmPassword,
         }),
       });
 
       const data = await response.json();
       if (response.ok) {
-        setNotificationType('success');
-        setShowNotification(true);
         setMessage(data.message);
+        setNotificationType('success');
+        setFormData(prev => ({
+          ...prev,
+          password: '',
+          newPassword: '',
+          confirmPassword: '',
+        }));
       } else {
-        setNotificationType('error');
-      setShowNotification(true);
         setError(data.message);
+        setNotificationType('error');
       }
+      setShowNotification(true);
     } catch (err) {
       setError('Error changing password');
+      setNotificationType('error');
+      setShowNotification(true);
     }
   };
 
   const handleProfilePicUpload = async (event) => {
-    // Handles profile picture upload
+    const token = sessionStorage.getItem('authToken');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
     const file = event.target.files[0];
     if (!file) return;
 
     const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
     if (!validTypes.includes(file.type)) {
       setError('Please upload a valid image file (JPEG, PNG, or GIF)');
+      setNotificationType('error');
+      setShowNotification(true);
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
       setError('File size must be less than 5MB');
+      setNotificationType('error');
+      setShowNotification(true);
       return;
     }
 
@@ -249,7 +312,6 @@ export const Profile = () => {
     formData.append('profilePicture', file);
 
     try {
-      const token = localStorage.getItem('authToken');
       const response = await fetch('http://localhost:3000/api/profile/uploadProfilePic', {
         method: 'POST',
         headers: {
@@ -263,10 +325,14 @@ export const Profile = () => {
       }
 
       const data = await response.json();
-      setProfilePic(data.imageData);
+      setProfilePic(data.imageUrl);
       setMessage('Profile picture updated successfully');
+      setNotificationType('success');
+      setShowNotification(true);
     } catch (err) {
       setError('Error uploading profile picture: ' + err.message);
+      setNotificationType('error');
+      setShowNotification(true);
     }
   };
 
@@ -281,15 +347,9 @@ export const Profile = () => {
     );
   }
 
-  // if (error) {
-  //   return (
-  //     <div className="p-4 bg-red-100 text-red-700 rounded">
-  //       <p>Error: {error}</p>
-  //     </div>
-  //   );
-  // }
+  
 
- 
+
 
   return (
     
@@ -415,9 +475,9 @@ export const Profile = () => {
                     >
                        <Widget
                       key={index}
-                      category={deal.jobs?.job_category}
-                      description={deal.jobs?.description}
-                      status={deal.status}
+                      category={deal.job.job_category}
+                      description={deal.job.description}
+                      status={deal.job.status}
                     />
                       {/* <p className="font-medium text-lg text-gray-800">{deal.jobs?.job_category}</p>
                       <p className="text-gray-600">{deal.jobs?.description}</p>
@@ -463,7 +523,7 @@ export const Profile = () => {
                 <Widget_Deal
                   key={appIndex}
                   category={`Application from ${application.workerFirstName} ${application.workerLastName}`}
-                  description={`Worker ID: ${application.workerId}`} // You can add more descriptive information
+                  description={`Worker: ${application.workerFirstName}`} 
                   status={application.status || "Pending"}
                   onAccept={() => handleApplicationAction(offer.id, application.workerId, 'accept')}
                   onReject={() => handleApplicationAction(offer.id, application.workerId, 'decline')}

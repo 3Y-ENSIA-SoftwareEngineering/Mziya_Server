@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Navbar } from "./../Components/NavBar.jsx";
 import JobCard from "./../Components/JobCard";
-import { Footer } from "./../Components/Footer.jsx";
 import { useNavigate } from "react-router-dom";
 import "./../CSSFiles/footer.css";
 
@@ -13,7 +12,7 @@ const FindJob = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const fetchJobs = async (option = null, category = null) => {
+  const fetchJobs = useCallback(async (option = null, category = null) => {
     setIsLoading(true);
     setError(null);
 
@@ -50,7 +49,7 @@ const FindJob = () => {
       const response = await fetch(endpoint, {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`, // Add the token to the headers
+          Authorization: `Bearer ${token}`, // Adding the token to the headers
         },
       });
 
@@ -67,17 +66,17 @@ const FindJob = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [navigate]);
 
   useEffect(() => {
     fetchJobs();
-  }, []);
+  }, [fetchJobs]);
 
   useEffect(() => {
     if (selectedOption) {
       fetchJobs(selectedOption, selectedCategory);
     }
-  }, [selectedOption, selectedCategory]);
+  }, [selectedOption, selectedCategory, fetchJobs]);
 
   const handleSelect = (option) => {
     setSelectedOption(option);
@@ -225,7 +224,6 @@ const FindJob = () => {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
     </div>
   );
 };

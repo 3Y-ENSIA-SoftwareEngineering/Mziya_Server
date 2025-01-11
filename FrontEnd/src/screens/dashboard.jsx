@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar } from "./../Components/NavBar";
+import { FooterDown } from "./../Components/FooterDown";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export const Dashboard = () => {
@@ -33,12 +34,8 @@ export const Dashboard = () => {
         </Link>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-dark text-white text-center py-3">
-        <p className="mb-0">
-          &copy; 2024 Your Company Name. All Rights Reserved.
-        </p>
-      </footer>
+     {/* Footer */}
+     <FooterDown />
     </div>
   );
 };

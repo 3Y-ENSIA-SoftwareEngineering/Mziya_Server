@@ -1,20 +1,35 @@
-// src/routes/profileRoutes.js
 import express from 'express';
-import multer from 'multer';
-import * as profileController from '../controllers/profile.controller.js';
-import authMiddleware from '../middleware/auth.middleware.js';
+import {
+  getUserProfile,
+  getJobDeals,
+  getJobOffers,
+  uploadProfilePic,
+  updateUserProfile,
+  changePassword,
+} from '../controllers/profile.controller.js';
+import extractUserId from '../middleware/extractUserId.js'; // Import the existing middleware
 
 const router = express.Router();
-const upload = multer({ storage: multer.memoryStorage() });
 
-// Profile routes with authentication middleware
-router.get('/user',  authMiddleware, profileController.getUserProfile);
-router.get('/jobDeals',authMiddleware, profileController.getJobDeals);
- router.get('/jobOffers',authMiddleware,  profileController.getJobOffers);
-router.put('/changePassword',authMiddleware, profileController.changePassword);
-router.put('/update', authMiddleware, profileController.updateUserProfile);
-router.post('/uploadProfilePic', authMiddleware, upload.single('profilePicture'), profileController.uploadProfilePic);
+// Apply the authentication middleware to all profile routes that require user authentication
+router.use(extractUserId);
 
-// //router.post('/uploadProfilePic', authMiddleware, upload.single('file'), profileController.uploadProfilePic);
+// Get user profile details (GET /profile/user)
+router.get('/user', getUserProfile);
+
+// Get job deals (GET /profile/jobDeals)
+router.get('/jobDeals', getJobDeals);
+
+// Get job offers (GET /profile/jobOffers)
+router.get('/jobOffers', getJobOffers);
+
+// Upload profile picture (POST /profile/upload-profile-pic)
+router.post('/upload-profile-pic', uploadProfilePic);
+
+// Update user profile (PUT /profile/update)
+router.put('/update', updateUserProfile);
+
+// Change user password (PUT /profile/change-password)
+router.put('/change-password', changePassword);
 
 export default router;

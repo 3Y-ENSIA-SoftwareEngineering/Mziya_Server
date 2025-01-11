@@ -135,9 +135,7 @@ const Login = () => {
             </div>
             {serverError && <p className="error">{serverError}</p>}
             <div className="actions">
-              <a href="#" className="forgot-password">
-                Forgot password?
-              </a>
+              
             </div>
             <button type="submit" className="login-button" disabled={isLoading}>
               {isLoading ? "Logging in..." : "Next"}

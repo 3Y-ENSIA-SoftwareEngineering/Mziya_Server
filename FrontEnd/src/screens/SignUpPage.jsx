@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
 import doorRepair from "../Components/images/door-repair.png";
-import { useNavigate } from "react-router-dom"; // Import useNavigate to handle page navigation
+import { useNavigate } from "react-router-dom"; // Import useNavigate for page redirection
 
 export function SignUp() {
   const navigate = useNavigate(); // Initialize useNavigate for page redirection
@@ -21,84 +19,94 @@ export function SignUp() {
     password: "",
     confirmPassword: "",
   }); 
-  // Manage form data using state
   const [errors, setErrors] = useState({}); // Manage form validation errors
   const [isLoading, setIsLoading] = useState(false); // Manage loading state during API request
   const [apiResponse, setApiResponse] = useState(""); // Store API response message
 
-  // Function to validate the form data ()
+  // Function to validate the form data
   const validateForm = () => {
     const newErrors = {};
 
+    // First name validation
     if (!formData.Fname.trim()) {
-        newErrors.Fname = "First name is required";
+      newErrors.Fname = "First name is required";
     }
 
+    // Last name validation
     if (!formData.Lname.trim()) {
-        newErrors.Lname = "Last name is required";
+      newErrors.Lname = "Last name is required";
     }
 
+    // Email validation
     if (!formData.email.trim()) {
-        newErrors.email = "Valid email is required.";
+      newErrors.email = "Valid email is required.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-        newErrors.email = "Invalid email format.";
+      newErrors.email = "Invalid email format.";
     }
 
+    // Phone number validation
     if (!formData.PhoneNum.trim()) {
-        newErrors.PhoneNum = "Phone number is required";
+      newErrors.PhoneNum = "Phone number is required";
     } else if (!/^(05|06|07)\d{8}$/.test(formData.PhoneNum)) {
-        newErrors.PhoneNum = "Phone number must start with 05, 06, or 07 and have exactly 10 digits";
+      newErrors.PhoneNum = "Phone number must start with 05, 06, or 07 and have exactly 10 digits";
     }
 
+    // Password validation
     if (!formData.password.trim()) {
-        newErrors.password = "Password is required";
+      newErrors.password = "Password is required";
     } else {
-        if (formData.password.length < 8) {
-            newErrors.password = "Password must be at least 8 characters long";
-        }
-        if (!/[0-9]/.test(formData.password)) {
-            newErrors.password = "Password must contain a number";
-        }
-        if (!/[a-z]/.test(formData.password)) {
-            newErrors.password = "Password must contain a lowercase letter";
-        }
-        if (!/[A-Z]/.test(formData.password)) {
-            newErrors.password = "Password must contain an uppercase letter";
-        }
-        if (!/[!@#$%^&*(),.?"':;{}|<>-_]/.test(formData.password)) {
-            newErrors.password = "Password must contain a special character";
-        }
+      if (formData.password.length < 8) {
+        newErrors.password = "Password must be at least 8 characters long";
+      }
+      if (!/[0-9]/.test(formData.password)) {
+        newErrors.password = "Password must contain a number";
+      }
+      if (!/[a-z]/.test(formData.password)) {
+        newErrors.password = "Password must contain a lowercase letter";
+      }
+      if (!/[A-Z]/.test(formData.password)) {
+        newErrors.password = "Password must contain an uppercase letter";
+      }
+      if (!/[!@#$%^&*(),.?"':;{}|<>-_]/.test(formData.password)) {
+        newErrors.password = "Password must contain a special character";
+      }
     }
+
+    // Confirm password validation
     if (formData.confirmPassword !== formData.password)
       newErrors.confirmPassword = "Passwords do not match"; // Check if passwords match
+    if (formData.confirmPassword.length === 0)
+      newErrors.confirmPassword = "Password confirmation is required"; // Check if password confirmation is empty
 
-    if(formData.confirmPassword.length==0)
-      newErrors.confirmPassword ="password confirmation is required"; // Check if password confirmation is empty
+    // Gender validation
     if (!formData.Gender) {
-        newErrors.Gender = "Gender is required";
+      newErrors.Gender = "Gender is required";
     } else if (!['male', 'female', 'other'].includes(formData.Gender.toLowerCase())) {
-        newErrors.Gender = "Gender must be male, female, or other";
+      newErrors.Gender = "Gender must be male, female, or other";
     }
 
+    // National ID validation
     if (!formData.Id.trim()) {
-        newErrors.Id = "National ID is required";
+      newErrors.Id = "National ID is required";
     } else if (formData.Id.length < 9 || formData.Id.length > 18) {
-        newErrors.Id = "National ID must be between 9 and 18 characters";
+      newErrors.Id = "National ID must be between 9 and 18 characters";
     }
 
+    // Birth date validation
     if (!formData.BirthDate) {
-        newErrors.BirthDate = "Valid date of birth is required";
+      newErrors.BirthDate = "Valid date of birth is required";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-};
+  };
+
   // Function to send the form data to the backend
   const PostDataToBackend = async () => {
     try {
       setIsLoading(true); // Set loading state to true when the request starts
       setApiResponse(""); // Clear any previous messages
-      
+
       const formattedData = {
         first_name: formData.Fname,
         last_name: formData.Lname,
@@ -121,26 +129,22 @@ export function SignUp() {
         body: JSON.stringify(formattedData),
       });
 
-      // Parse the response from the backend
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Registration successful", data); // Log success message
-        
-        setApiResponse("Redirecting to email verification..."); // Display redirect message
+        console.log("Registration successful", data);
+        setApiResponse("Redirecting to email verification...");
         
         await new Promise(resolve => setTimeout(resolve, 1500)); // Wait for 1.5 seconds before redirecting
         
-        // Navigate to the next page (email verification or default)
-        navigate(data.redirect || './check_email');
+        navigate(data.redirect || './check_email'); // Navigate to the next page
       } else {
-        console.error("Registration error:", data); // Log error message
-        console.log('apiResponse:', apiResponse);
-        setApiResponse(data.message || "error encountered"); // Set error message
+        console.error("Registration error:", data);
+        setApiResponse(data.message || "Error encountered");
       }
     } catch (error) {
-      console.error("Network or parsing error:", error); // Log network or parsing errors
-      setApiResponse("Failed to connect to the server. Please try again."); // Show error message
+      console.error("Network or parsing error:", error);
+      setApiResponse("Failed to connect to the server. Please try again.");
     } finally {
       setIsLoading(false); // Ensure loading state is set to false after the request
     }
@@ -148,21 +152,16 @@ export function SignUp() {
 
   // Handle form submission
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    console.log("Form data:", formData); // Log form data for debugging
+    e.preventDefault();
     if (validateForm()) {
-      console.log("Form validation passed. Proceeding with API request...");
-      PostDataToBackend(); // If form is valid, send data to backend
-    } else {
-      console.log("Form validation failed. Errors:", errors); // Log validation errors if any
+      PostDataToBackend();
     }
   };
 
   // Handle changes in form fields
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value }); // Update form data state with the new value
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  //start of html part 
   return (
     <div>
       <div
@@ -248,7 +247,7 @@ export function SignUp() {
                     
                     selected={formData.BirthDate}
                     onChange={(date) => setFormData({ ...formData, BirthDate: date })}
-                    placeholderText="Select your birthdate y/m/d"
+                    placeholderText="Date of Birth YYYY/MM/DD"
                     dateFormat="yyyy/MM/dd"
                     maxDate={new Date("2006-12-31")}
                     showYearDropdown

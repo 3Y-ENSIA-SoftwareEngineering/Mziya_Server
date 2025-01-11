@@ -44,7 +44,7 @@ export const Navbar = () => {
             style={{ gap: "20px" }}
           >
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/">
+              <Link className="nav-link text-white" to="/dashboard">
                 Home
               </Link>
             </li>
@@ -61,11 +61,6 @@ export const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link text-white" to="/contact">
                 Contact Us
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link text-white" to="/login">
-                Account
               </Link>
             </li>
             <li className="nav-item">
