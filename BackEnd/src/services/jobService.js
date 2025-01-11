@@ -10,7 +10,6 @@ class JobService {
       .select('user_id')
       .eq('user_id', home_owner_id)
       .single();
-    console.log("123 viva l algerie")
     if (userError || !user) {
       throw new Error('User account does not exist. Please create an account first.');
     }

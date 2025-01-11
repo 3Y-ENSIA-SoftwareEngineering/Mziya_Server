@@ -1,4 +1,4 @@
-import supabase from '../config/database.js';  // Import supabase client
+import supabase from '../config/database.js'; 
 import logger from '../utils/logger.js';
 
 class ApplyJobService {

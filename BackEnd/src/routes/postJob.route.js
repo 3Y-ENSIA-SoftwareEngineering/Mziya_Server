@@ -16,5 +16,5 @@ const router = express.Router();
     }, 
     JobController.addJob
     );
-console.log("postJob.route.js");
+
 export default router;
